@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d0h4tkb1ennfm"]
+
+[ext_resource type="Script" uid="uid://h8ireoe0hy42" path="res://Ship/Ship.gd" id="1_jgjpc"]
+
+[node name="Polygon2D" type="Polygon2D" unique_id=1228502896]
+script = ExtResource("1_jgjpc")
