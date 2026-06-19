@@ -11,12 +11,21 @@ config_version=5
 [application]
 
 config/name="DEADWEIGHT"
+run/main_scene="uid://btc37rin6qi68"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="DEADWEIGHT"
+
+[input]
+
+set_target={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(203, 11),"global_position":Vector2(212, 59),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
 
 [physics]
 

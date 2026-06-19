@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://btc37rin6qi68"]
+
+[ext_resource type="Script" uid="uid://b81pgta5mdamf" path="res://System/Grid.gd" id="1_0qcro"]
+[ext_resource type="PackedScene" uid="uid://d0h4tkb1ennfm" path="res://Ship/Ship.tscn" id="1_akwq5"]
+[ext_resource type="Script" uid="uid://crf8nlidgh7rx" path="res://System/GridBackground.gd" id="2_gacec"]
+
+[node name="System" type="Node2D" unique_id=2141992628]
+
+[node name="Grid" type="Node2D" parent="." unique_id=1897605882]
+script = ExtResource("1_0qcro")
+
+[node name="GridBackground" type="Polygon2D" parent="Grid" unique_id=2014021703]
+show_behind_parent = true
+color = Color(0.09411765, 0.09411765, 0.09411765, 1)
+script = ExtResource("2_gacec")
+
+[node name="Ship" parent="." unique_id=1889162700 instance=ExtResource("1_akwq5")]
+top_level = true
+
+[editable path="Ship"]
