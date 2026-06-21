@@ -1,22 +1,38 @@
 extends Node2D
 
 var system_collectibles 		:int
-# Called when the node enters the scene tree for the first time.
+var resetting := false
+
 func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
 	child_exiting_tree.connect(_on_collectible_removed)
 	
-func _process(delta: float) -> void:
-	if system_collectibles <= 0 || Input.is_action_just_pressed("system_reset"):
-		GameState.player_cargo = 0
-		GameState.player_rotation = $Ship.rotation
-		get_tree().reload_current_scene()
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("system_reset"):
+		print("q pressed -> triggers reset")
+		system_reset($Ship.rotation, 0)
 	
 func _on_collectible_added(node) -> void:
-	system_collectibles += 1
-	print("system_colletible added - system_collectible = ", system_collectibles)
+	if node.is_in_group("collectibles"):
+		print("system_colletible added - system_collectible = ", system_collectibles)
+		system_collectibles += 1
 
 func _on_collectible_removed(node) -> void:
-	system_collectibles -= 1
-	print("system_colletible removed - system_collectible = ", system_collectibles)
+	if not is_inside_tree():
+		return
+	if node.is_in_group("collectibles"):
+		system_collectibles -= 1
+		print("system_colletible removed - system_collectible = ", system_collectibles)
+		if system_collectibles <= 0 and not resetting:
+			print("last collectible collected -> triggers reset")
+			system_reset($Ship.rotation, 0)
 	
+func system_reset(set_ship_rotation: float, set_ship_cargo: int) -> void:
+	print(">>> system_reset called, resetting=", resetting, " count=", system_collectibles)
+	if resetting:
+		print(">>> guard caught re-entry")
+		return
+	resetting = true
+	GameState.player_cargo = set_ship_cargo
+	GameState.player_rotation = set_ship_rotation
+	get_tree().reload_current_scene.call_deferred()

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://kook18hto1vf" path="res://Ship/Hull.gd" id="1_11244"]
 [ext_resource type="Script" uid="uid://h8ireoe0hy42" path="res://Ship/Ship.gd" id="1_jgjpc"]
 [ext_resource type="Script" uid="uid://barf7ehdiiixo" path="res://Ship/ShipUI.gd" id="3_5p3wb"]
+[ext_resource type="Script" uid="uid://bqypvpqrk5lib" path="res://Ship/ShipCollisionArea.gd" id="4_k7qg1"]
 [ext_resource type="Script" uid="uid://tww1lc56f652" path="res://Ship/CollisionCircle.gd" id="4_uhe0r"]
 
 [node name="Ship" type="Node2D" unique_id=1889162700]
@@ -18,6 +19,7 @@ script = ExtResource("1_11244")
 script = ExtResource("3_5p3wb")
 
 [node name="CollisionArea" type="Area2D" parent="." unique_id=362370994]
+script = ExtResource("4_k7qg1")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="CollisionArea" unique_id=1651312032]
 script = ExtResource("4_uhe0r")

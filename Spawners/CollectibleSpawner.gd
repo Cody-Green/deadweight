@@ -13,6 +13,7 @@ var num_collectibles 	:int   =  20
 func _ready() -> void:
 	for i in range(num_collectibles):
 		var new_collectible = collectible.instantiate()
+		new_collectible.add_to_group("collectibles")
 		new_collectible.position = Vector2(randf_range(position_min, position_max), randf_range(position_min, position_max))
 		get_parent().add_child.call_deferred(new_collectible)
 	print("spawned: ", num_collectibles, " collectibles")
