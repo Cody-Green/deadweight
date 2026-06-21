@@ -1,9 +1,17 @@
+#Grid.gd
+
+#<->System
+#   |->Grid
+
 extends Node2D
 
-var grid_thickness = 1
-var grid_spacing = 80
-var grid_lines = 100
-var grid_color = Color(0.0, 0.157, 0.0, 1.0)
+var grid_thickness		:float = 2
+var grid_spacing		:int = 100
+var grid_lines			:float
+var grid_color			:Color = Color(0.0, 0.454, 0.0, 0.15)
+
+func _ready() -> void:
+	grid_lines = $GridBackground.grid_scale / grid_spacing
 
 func _draw() -> void:
 	for i in range(grid_lines + 1):

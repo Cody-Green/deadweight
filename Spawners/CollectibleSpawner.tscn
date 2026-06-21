@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dyqdylqx5hav3"]
+
+[ext_resource type="Script" uid="uid://d08ox06yhnm66" path="res://Spawners/CollectibleSpawner.gd" id="1_tcjmf"]
+
+[node name="CollectibleSpawner" type="Node" unique_id=2085309862]
+script = ExtResource("1_tcjmf")

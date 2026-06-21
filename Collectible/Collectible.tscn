@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bsowrd2biqwgd"]
+
+[ext_resource type="Script" uid="uid://cc16xqxifqhhr" path="res://Collectible/Collectible.gd" id="1_ekgxt"]
+[ext_resource type="Script" uid="uid://cvb5ewmsp0mv2" path="res://Collectible/CollisionCircle.gd" id="2_1eaqt"]
+[ext_resource type="Script" uid="uid://tjs16fyrtxmy" path="res://Collectible/CollectibleShape.gd" id="3_1eaqt"]
+
+[node name="Collectible" type="Node2D" unique_id=1206956964]
+script = ExtResource("1_ekgxt")
+
+[node name="CollisionArea" type="Area2D" parent="." unique_id=284736311]
+
+[node name="CollisionCircle" type="CollisionShape2D" parent="CollisionArea" unique_id=250644367]
+script = ExtResource("2_1eaqt")
+
+[node name="CollectibleShape" type="Node2D" parent="." unique_id=55811968]
+script = ExtResource("3_1eaqt")

@@ -2,9 +2,28 @@
 
 [ext_resource type="Script" uid="uid://b81pgta5mdamf" path="res://System/Grid.gd" id="1_0qcro"]
 [ext_resource type="PackedScene" uid="uid://d0h4tkb1ennfm" path="res://Ship/Ship.tscn" id="1_akwq5"]
+[ext_resource type="Script" uid="uid://vp8gg860mx1w" path="res://System/InputManager.gd" id="1_fjbyk"]
+[ext_resource type="Script" uid="uid://c7r576gd7f4ca" path="res://System/System.gd" id="1_lg61g"]
+[ext_resource type="Script" uid="uid://ckg4kg6rugsp0" path="res://System/UICanvasLayer.gd" id="1_xds23"]
+[ext_resource type="PackedScene" uid="uid://dyqdylqx5hav3" path="res://Spawners/CollectibleSpawner.tscn" id="1_ysovm"]
 [ext_resource type="Script" uid="uid://crf8nlidgh7rx" path="res://System/GridBackground.gd" id="2_gacec"]
+[ext_resource type="Script" uid="uid://xm4jm2u4snrc" path="res://System/UICanvasLabel.gd" id="2_xds23"]
 
 [node name="System" type="Node2D" unique_id=2141992628]
+script = ExtResource("1_lg61g")
+
+[node name="InputManager" type="Node" parent="." unique_id=35182053]
+script = ExtResource("1_fjbyk")
+
+[node name="CollectibleSpawner" parent="." unique_id=2085309862 instance=ExtResource("1_ysovm")]
+
+[node name="UICanvasLayer" type="CanvasLayer" parent="." unique_id=689331939]
+script = ExtResource("1_xds23")
+
+[node name="Label" type="Label" parent="UICanvasLayer" unique_id=1397640465]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("2_xds23")
 
 [node name="Grid" type="Node2D" parent="." unique_id=1897605882]
 script = ExtResource("1_0qcro")
@@ -15,6 +34,5 @@ color = Color(0.09411765, 0.09411765, 0.09411765, 1)
 script = ExtResource("2_gacec")
 
 [node name="Ship" parent="." unique_id=1889162700 instance=ExtResource("1_akwq5")]
-top_level = true
 
 [editable path="Ship"]

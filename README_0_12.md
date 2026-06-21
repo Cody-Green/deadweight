@@ -1,10 +1,8 @@
 # DEADWEIGHT
-## Game Design Document — v0.13
+## Game Design Document — v0.12
 *Single-player offline extraction sandbox for Godot 4.6.3*
 
-> **Revision note (v0.13):** Added **§14 Sensors, Contacts & Identity** — folds in the parked sensor/contact/registration cluster: the *information-as-resource* principle, the blip→vector→profile→manifest resolution ladder, spoofable registration broadcasts, standing colour-coding (maps onto §10's −10..+10 scale), and active scan as truth-but-provocative (specifies the "active scanning" loud-action hook already named in §5). Two load-bearing forks — **display philosophy** and **hostility model** — are flagged open, not locked. Idea Backlog renumbered §14→§15 (one cross-ref in §5 updated); added backlog item *broadcast-vs-run-dark*. Placement provisional: §14 currently sits by §13 (UI/UX) given the HUD overlap; may move adjacent to §7 in a later pass.
->
-> *(Prior — v0.12: coherence sweep aligning older sections to the §6 composition engine; corrected Pillar 4 risk curve to Sector Tension.)*
+> **Revision note (v0.12):** Coherence sweep. Aligned older sections to the locked composition engine (§6) — replaced leftover PoE-affix language in Pillar 3, the §4.4 tier table, and §§11/12/14 with materials-and-rolls terms; corrected Pillar 4's risk curve to Sector Tension; refreshed stale version tags. Light de-pitch only — the design-intent voice is left intact for the later personal-wording pass.
 
 ---
 
@@ -152,7 +150,7 @@ As Tension crosses thresholds, hostile waves escalate; the top of the curve spaw
 | Career | Exposure mechanic (what makes it risky without seeking combat) |
 |---|---|
 | **Combat / Bounty** | The fight *is* the exposure — you chose it. Risk = winning the engagement. |
-| **Mining** | Beam requires near-stationary operation; full hold adds mass; mining emits a detectable signature that raises tension. *(Variant in §15: deployable drill you defend.)* |
+| **Mining** | Beam requires near-stationary operation; full hold adds mass; mining emits a detectable signature that raises tension. *(Variant in §14: deployable drill you defend.)* |
 | **Salvage** | Must orbit/tractor wrecks, usually in already-contested battle sites; time-on-site raises heat. |
 | **Hacking (Data/Relic)** | Stationary minigame with an alarm timer; failure/slowness summons defenders. |
 | **Hauling / Trade** | Heavy, slow hull; valuable cargo increases aggression drawn; gates are ambush chokepoints. |
@@ -262,68 +260,8 @@ Scanning, combat/data/relic sites, wormholes; research tiers T1–T4 with T4 beh
 
 ---
 
-## 14. Sensors, Contacts & Identity *(settled v0.13 — two forks open)*
+## 14. Idea Backlog / Future Considerations *(captured, not yet designed)*
 
-> **Governing principle — information is a resource.** Nothing about another contact is free or certain; you spend sensor capability, proximity, and risk to learn it. This rhymes with the extraction spine (Pillar 1 / §5): just as cargo costs exposure-time, *knowledge* costs exposure. The subsystem exists to turn *looking* into a decision with consequences.
-
-### 14.1 Contact resolution ladder
-A contact is not a fixed icon; it **resolves** through stages, gated by `range × installed sensor grade`:
-
-| Stage | What resolves | Typical gate |
-|---|---|---|
-| **Blip** | Presence + rough position | minimal sensors / long range |
-| **Vector** | Heading & velocity; blip becomes an oriented glyph | better sensors / closing range |
-| **Profile** | Hull silhouette / class (frigate vs. hauler) | good sensors / near range |
-| **Manifest** | Fitted loadout & cargo | **active scan only** (§14.4) |
-
-Better sensor modules resolve **more, sooner, further** — so sensors matter *perceptually*, not as stat lines; upgrading gear changes what literally appears on the display. Ties to §11.1: because hostiles are built from the same module system, a resolved **Manifest** shows the *actual* modules a target has fitted — i.e. it previews the salvage.
-
-### 14.2 Registration broadcast — passive identity
-Legitimate ships run a transponder broadcasting a **registration**: a claimed identity carrying faction and standing (§10). Passive and ambient — received at range, for free, with no action required.
-
-**A broadcast is a _claim_, not a _fact_.** It is spoofable; a pirate can broadcast a clean registration. The transponder paints your display with *claimed* allegiance — useful, but untrustworthy alone. This single property is what gives the rest of the subsystem its teeth.
-
-### 14.3 Standing & colour-coding
-Contacts are coloured by their *claimed* standing (from broadcast, mapped onto §10's −10..+10 scale), or neutral-grey when unregistered/unresolved:
-- **Friendly** — green / blue
-- **Neutral · unknown · unregistered** — grey
-- **Hostile · flagged** — red / orange
-
-> *Open (minor / taste):* own-faction vs. allied-but-other-faction friendlies — one colour, or two shades? Leaning two shades of the friendly hue (own-faction brightest) so "mine" vs. "friendly-not-mine" reads at a glance.
-
-### 14.4 Active scan — the truth tool, and the gamble
-A **high-resolution scan** reveals truth — real loadout, cargo, actual allegiance — piercing a spoofed broadcast (resolves the **Manifest** stage, §14.1). Two costs:
-1. It requires sensor capability and a **deliberate action**.
-2. **It is a loud action** — it generates heat and raises **Sector Tension (§5)**, *and* it is legible to the target, so it **can be read as a hostile act**. Scanning to assess a contact may provoke the very fight you were trying to avoid.
-
-> *Consistency:* §5 already lists *active scanning* among the "loud actions" that generate heat. §14.4 is where that line's full intent is specified — scanning costs you on both the tension axis and the social axis.
-
-### 14.5 The central tension *(the point of the subsystem)*
-Everything above exists to produce one recurring decision:
-
-> *That contact is broadcasting green. Do you trust it — or spend a provocative scan to verify, knowing the scan itself may start the fight?*
-
-Trusting a spoof gets you ambushed; scanning a genuine friendly may start a fight or burn standing (§10). **Information-gathering is push-your-luck**, mirroring the extraction spine: everything worth having costs exposure.
-
-### 14.6 Open forks *(load-bearing — block full lock of this section)*
-
-**Fork A — Display philosophy.** *(Prior leaning: hybrid. Now actively being decided — do not treat as locked.)*
-- **Pure glyph (always):** every contact is an oriented arrow at all times. Simplest to build and read; maximal "I am reading a sensor display, not looking out a window" fantasy. **Cost:** discards the resolve-on-approach dread *and* partly defangs the modular-ship system (§6 / §11.1) — if hulls are never seen up close, "ships built from shape kits" becomes invisible plumbing the player can't perceive.
-- **Hybrid (glyph default → silhouette near):** glyph at normal range; the modular silhouette resolves in on close approach (= the §14.1 **Profile** stage, made visual). Preserves the dread and lets the modular system visually pay off. **Cost:** build both layers plus the morph between them.
-- *Lean:* hybrid, with the glyph as the *default* state — which is likely what "abstract from the main camera" already meant. **→ decision pending.**
-
-**Fork B — Hostility model.**
-- **Total darkness:** no contact's true intent is known until it commits a hostile act. **Risk:** collapses §14.3's colours into a single behavioural category ("assume everything hostile"), flattening the world.
-- **Partial / purchasable:** you always have a *claimed* read (cheap, spoofable) and can buy *truth* (expensive, provocative). The drama becomes trust-vs-verify.
-- *Lean:* partial/purchasable — it is the model that makes §14.3–14.5 function at all; total darkness nullifies them. **→ decision pending.**
-
-> *Scope note:* this fork governs how the player reads the **faction / NPC population**, and is distinct from §5's escalating hostile **waves**, which are environmental Sector-Tension spawns and unambiguously hostile by construction.
-
----
-
-## 15. Idea Backlog / Future Considerations *(captured, not yet designed)*
-
-- **Broadcast vs. run dark** *(emerges from §14.2)* — your *own* transponder becomes a decision: broadcast a registration for legitimacy and safe-passage (but be trackable and identifiable), or run silent for stealth (but read as suspicious / lose friendly-passage benefits). A self-facing mirror of the contact-identity system.
 - **Mercenary hiring** — pay NPC wingmen to escort risky runs. They can die, adding their own loss/insurance/logistics layer. Ties into the Social skill line and the economy.
 - **ECCM (counter-ECM)** — ECM already exists as a mid-slot module; ECCM as counter-jamming becomes tactically central when breaking a hunter-elite's lock/scramble is the player's escape. Design the ECM↔ECCM↔scramble interplay as the heart of the extraction-denial minigame.
 - **Deployable drill + defend** — a mining variant: deploy an autonomous drill platform and defend it while it strips ore. Swaps "sit still yourself" exposure for "defend the asset" tower-defense tension. Generalizable to deployable salvage/harvest platforms.
@@ -348,9 +286,6 @@ Trusting a spoof gets you ambushed; scanning a genuine friendly may start a figh
 - Spine: **progressive QOL** as meta-progression; loose direction, no rails.
 - Module economy (§11): **one module, three roads** (Found/Forged/Bought; buying = priced shortcut). **Per-discipline find-only ceiling** (peak earned from each lane's own deep-risk play, not combat-only). **Equity floor** (necessity in-lane, incentive cross-lane). **Soft specialization** (most-efficient not only-source; efficiency gap = cross-pollination dial, start modest). **Fun, not a chore** (§0).
 - Component engine (§6): **composition-led** — stats derived from materials; deterministic refine→assemble pipeline (~75–85%) + bounded per-unit **tune** gamble (~15–25%, improve↑/degrade↓, rising risk near perfection); exotics = find-only ceiling. Supersedes the PoE affix sketch.
-- Sensors & identity (§14): **information is a resource** (sensors × range × risk). Contact **resolution ladder** (blip→vector→profile→manifest). Registration broadcast = a **spoofable claim**, received passively. Standing **colour palette** (green/blue friendly, grey neutral/unknown, red/orange hostile; maps to §10). Active scan = **truth, but loud + provocative** (ties to §5 heat). Central tension: **trust the broadcast vs. pay to verify.** *Two forks still OPEN, not locked: display philosophy (§14.6-A) and hostility model (§14.6-B).*
 
 ## Next up in the part-by-part pass
 §6 detail — the material-property → stat math model and the tune risk curve (both are simulatable on the sim bench) → then §7 combat (the Aurora "Combat Setup & Mechanics" page is loaded and relevant) → then revisit §8–§13 under the locked frame.
-
-*Also open (independent of the above):* settle **§14.6 Fork A** (display philosophy) and **Fork B** (hostility model) — both gate how the sensor/contact subsystem is built.
