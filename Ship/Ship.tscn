@@ -10,6 +10,7 @@
 script = ExtResource("1_jgjpc")
 
 [node name="Hull" type="Polygon2D" parent="." unique_id=1023537773]
+color = Color(0.78431374, 0.8, 0.8156863, 1)
 antialiased = true
 script = ExtResource("1_11244")
 

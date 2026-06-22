@@ -1,7 +1,6 @@
-#CollectibleCollision.gd
+#Collectible.gd
 
-#|->Collectible
-#   |->CollisionArea
+#<->Collectible
 
 extends Node2D
 

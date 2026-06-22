@@ -9,10 +9,16 @@
 [ext_resource type="Script" uid="uid://crf8nlidgh7rx" path="res://System/GridBackground.gd" id="2_gacec"]
 [ext_resource type="Script" uid="uid://xm4jm2u4snrc" path="res://System/UICanvasLabel.gd" id="2_xds23"]
 
+[sub_resource type="SystemFont" id="SystemFont_fjbyk"]
+
+[sub_resource type="Theme" id="Theme_lg61g"]
+default_font = SubResource("SystemFont_fjbyk")
+Label/colors/font_color = Color(0.5411765, 0.5764706, 0.59607846, 1)
+
 [node name="System" type="Node2D" unique_id=2141992628]
 script = ExtResource("1_lg61g")
 
-[node name="InputManager" type="Node" parent="." unique_id=35182053]
+[node name="InputManager" type="Node2D" parent="." unique_id=1575179162]
 script = ExtResource("1_fjbyk")
 
 [node name="CollectibleSpawner" parent="." unique_id=2085309862 instance=ExtResource("1_ysovm")]
@@ -23,6 +29,7 @@ script = ExtResource("1_xds23")
 [node name="Label" type="Label" parent="UICanvasLayer" unique_id=1397640465]
 offset_right = 40.0
 offset_bottom = 23.0
+theme = SubResource("Theme_lg61g")
 script = ExtResource("2_xds23")
 
 [node name="Grid" type="Node2D" parent="." unique_id=1897605882]
@@ -30,7 +37,7 @@ script = ExtResource("1_0qcro")
 
 [node name="GridBackground" type="Polygon2D" parent="Grid" unique_id=2014021703]
 show_behind_parent = true
-color = Color(0.09411765, 0.09411765, 0.09411765, 1)
+color = Color(0.050980393, 0.05882353, 0.07058824, 1)
 script = ExtResource("2_gacec")
 
 [node name="Ship" parent="." unique_id=1889162700 instance=ExtResource("1_akwq5")]

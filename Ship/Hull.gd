@@ -1,6 +1,6 @@
 #Hull.gd
 
-#|->Ship
+#<->Ship
 #   |->Hull
 
 extends Polygon2D

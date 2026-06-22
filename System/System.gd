@@ -1,3 +1,5 @@
+#System.gd
+
 extends Node2D
 
 var system_collectibles 		:int
@@ -6,6 +8,7 @@ var resetting := false
 func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
 	child_exiting_tree.connect(_on_collectible_removed)
+	$InputManager.target_selected.connect(_on_new_target)
 	
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("system_reset"):
@@ -36,3 +39,9 @@ func system_reset(set_ship_rotation: float, set_ship_cargo: int) -> void:
 	GameState.player_cargo = set_ship_cargo
 	GameState.player_rotation = set_ship_rotation
 	get_tree().reload_current_scene.call_deferred()
+
+func _on_new_target(target_object: Object, null_position: Vector2) -> void:
+	if target_object:
+		$Ship.set_target_position(target_object.global_position) #eventually routes to UIManager
+	else:
+		$Ship.set_target_position(null_position)

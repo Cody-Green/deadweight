@@ -1,6 +1,6 @@
 #GridBackground.gd
 
-# |->Grid
+# <->Grid
 #    |->GridBackground
 
 extends Polygon2D
