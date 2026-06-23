@@ -15,10 +15,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		query.collide_with_areas = true
 		query.collide_with_bodies = false
 		var result = space.intersect_point(query)
-		var target_select_position = global_mouse_position
 		var screen_space_position = get_viewport().get_mouse_position()
 		if result.size() > 0:
 			selected_object = result[0].collider
 		else:
 			selected_object = null
-		target_selected.emit(selected_object, target_select_position, screen_space_position)
+		target_selected.emit(selected_object, global_mouse_position, screen_space_position)

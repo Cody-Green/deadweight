@@ -12,4 +12,3 @@ func _ready() -> void:
 	$PanelContainer/VBoxContainer/Collect.pressed.connect(_on_action_button_pressed.bind("collect"))
 func _on_action_button_pressed(action: String) -> void:
 	action_chosen.emit(action, target)
-	print(action)
