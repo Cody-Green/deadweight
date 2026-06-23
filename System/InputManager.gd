@@ -5,8 +5,8 @@ extends Node2D
 signal target_selected(selected_object, global_mouse_position, screen_space_mouse_position)
 var selected_object :Object = null
 
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("select_target"):
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("select_target"):
 		var space := get_world_2d().direct_space_state
 		var query := PhysicsPointQueryParameters2D.new()
 		var global_mouse_position = get_global_mouse_position()

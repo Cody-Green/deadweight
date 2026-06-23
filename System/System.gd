@@ -4,6 +4,8 @@ extends Node2D
 
 var system_collectibles 		:int
 var resetting := false
+var current_menu :Control = null
+var collectible_cursor_menu :PackedScene = preload("res://CursorMenus/CollectibleCursorMenu.tscn")
 
 func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
@@ -40,8 +42,27 @@ func system_reset(set_ship_rotation: float, set_ship_cargo: int) -> void:
 	GameState.player_rotation = set_ship_rotation
 	get_tree().reload_current_scene.call_deferred()
 
-func _on_new_target(target_object: Object, null_position: Vector2) -> void:
-	if target_object:
-		$Ship.set_target_position(target_object.global_position) #eventually routes to UIManager
+func _on_new_target(target_object: Object, world_position, screen_space_position: Vector2) -> void:
+	if current_menu:
+		current_menu.queue_free()
+	var new_menu = collectible_cursor_menu.instantiate()
+	new_menu.position = screen_space_position
+	#I'm assuming the menu can deal with target_object potentially being null
+	new_menu.target = target_object 
+	$UICanvasLayer.add_child(new_menu)
+	new_menu.action_chosen.connect(_on_action_chosen.bind(world_position))
+	current_menu = new_menu
+	
+func _on_action_chosen(action: String, target, world_position) -> void:
+	var unreachable_message = "UNREACHABLE BRANCH: YOU SHOULDN'T BE SEEING THIS MESSAGE"
+	if target:
+		if action == "approach":
+			$Ship.set_target_position(target.global_position - Vector2(100, 100))
+		elif action == "collect":
+			$Ship.set_target_position(target.global_position)
+		else:
+			print(unreachable_message)
 	else:
-		$Ship.set_target_position(null_position)
+		$Ship.set_target_position(world_position)
+	current_menu.queue_free()
+	current_menu = null

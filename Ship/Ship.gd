@@ -6,7 +6,7 @@ extends Node2D
 
 var target_position 	:Vector2 = Vector2(0, 0)
 var speed				:int = 400
-var stopping_threshold 	:float = 5
+var stopping_threshold 	:float = 10
 var zoom_step			:float = 0.1
 var zoom_level			:float = 0.6
 

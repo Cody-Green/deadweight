@@ -4,8 +4,12 @@
 
 extends Control
 
-var panel_minimum_x :float = 80
-var panel_minimum_y :float = 120
+signal action_chosen(action, target)
+var target :Object
 
 func _ready() -> void:
-	$Panel.custom_minimum_size = Vector2(panel_minimum_x, panel_minimum_y) 
+	$PanelContainer/VBoxContainer/Approach.pressed.connect(_on_action_button_pressed.bind("approach"))
+	$PanelContainer/VBoxContainer/Collect.pressed.connect(_on_action_button_pressed.bind("collect"))
+func _on_action_button_pressed(action: String) -> void:
+	action_chosen.emit(action, target)
+	print(action)
