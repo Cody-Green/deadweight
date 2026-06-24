@@ -47,29 +47,23 @@ func _on_new_target(target_object: Object, world_position, screen_space_position
 		current_menu.queue_free()
 	var new_menu = cursor_menu.instantiate()
 	new_menu.position = screen_space_position
-	#I'm assuming the menu can deal with target_object potentially being null
-	if target_object:
-		new_menu.target = target_object
-	else:
-		target_object = $EmptySpace
+	var actions_provider = target_object if target_object else $EmptySpace
+	new_menu.target = target_object              # null for empty space — intended
+	new_menu.menu_actions = actions_provider.get_parent().get_menu_actions()
 	new_menu.action_chosen.connect(_on_action_chosen.bind(world_position))
-	new_menu.menu_actions = target_object.get_menu_actions()
 	$UICanvasLayer.add_child(new_menu)
 	current_menu = new_menu
 	
 func _on_action_chosen(action: String, target, world_position) -> void:
 	var unreachable_message = "UNREACHABLE BRANCH: YOU SHOULDN'T BE SEEING THIS MESSAGE"
 	if target:
-		if action == "approach":
-			$Ship.set_target_position(target.global_position - Vector2(100, 100))
-		elif action == "collect":
-			$Ship.set_target_position(target.global_position)
-		else:
-			print(unreachable_message)
+		match action:
+			"approach": $Ship.set_target_position(target.global_position - Vector2(100, 100))
+			"collect": $Ship.set_target_position(target.global_position)
+			_: print(unreachable_message)
 	else:
-		if action == "move_to":
-			$Ship.set_target_position(world_position)
-		else:
-			print(unreachable_message)
+		match action:
+			"move_to": $Ship.set_target_position(world_position)
+			_: print(unreachable_message)
 	current_menu.queue_free()
 	current_menu = null
