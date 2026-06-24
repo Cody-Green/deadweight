@@ -6,7 +6,7 @@ signal target_selected(selected_object, global_mouse_position, screen_space_mous
 var selected_object :Object = null
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("select_target"):
+	if event.is_action_pressed("target_menu"):
 		var space := get_world_2d().direct_space_state
 		var query := PhysicsPointQueryParameters2D.new()
 		var global_mouse_position = get_global_mouse_position()

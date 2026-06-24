@@ -47,9 +47,13 @@ func _on_new_target(target_object: Object, world_position, screen_space_position
 		current_menu.queue_free()
 	var new_menu = cursor_menu.instantiate()
 	new_menu.position = screen_space_position
-	var actions_provider = target_object if target_object else $EmptySpace
-	new_menu.target = target_object              # null for empty space — intended
-	new_menu.menu_actions = actions_provider.get_parent().get_menu_actions()
+	if target_object:
+		var entity = target_object.owner # Area2D collider -> Collectible root
+		new_menu.target = entity
+		new_menu.menu_actions = entity.get_menu_actions()
+	else:
+		new_menu.menu_actions = $EmptySpace.get_menu_actions()
+		# new_menu.target stays null — intended (move_to routes via world_position)
 	new_menu.action_chosen.connect(_on_action_chosen.bind(world_position))
 	$UICanvasLayer.add_child(new_menu)
 	current_menu = new_menu
