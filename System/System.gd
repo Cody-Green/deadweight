@@ -61,8 +61,12 @@ func _on_new_target(target_object: Object, world_position, screen_space_position
 func _on_action_chosen(action: String, target, world_position) -> void:
 	var unreachable_message = "UNREACHABLE BRANCH: YOU SHOULDN'T BE SEEING THIS MESSAGE"
 	if target:
+		var direction_to_target = target.global_position - $Ship.position
 		match action:
-			"approach": $Ship.set_target_position(target.global_position - Vector2(100, 100))
+			"approach": $Ship.set_target_position(
+				$Ship.position +
+				direction_to_target.normalized() * 
+				(direction_to_target.length() - 100))
 			"collect": $Ship.set_target_position(target.global_position)
 			_: print(unreachable_message)
 	else:
