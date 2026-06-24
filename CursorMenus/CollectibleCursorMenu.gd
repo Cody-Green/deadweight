@@ -2,13 +2,20 @@
 
 #<->CollectibleCursorMenu
 
-extends Control
+extends PanelContainer
 
 signal action_chosen(action, target)
 var target :Object
+var menu_actions :Array = [{"text" : "Approach", "id" : "approach"}, {"text" : "Collect", "id" : "collect"}]
 
 func _ready() -> void:
-	$PanelContainer/VBoxContainer/Approach.pressed.connect(_on_action_button_pressed.bind("approach"))
-	$PanelContainer/VBoxContainer/Collect.pressed.connect(_on_action_button_pressed.bind("collect"))
+	for action in menu_actions:
+			var action_button :Button = Button.new()
+			action_button.text = action["text"]
+			action_button.pressed.connect(_on_action_button_pressed.bind(action["id"]))
+			$VBoxContainer.add_child(action_button)
+
 func _on_action_button_pressed(action: String) -> void:
 	action_chosen.emit(action, target)
+
+	
