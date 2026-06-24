@@ -5,7 +5,7 @@ extends Node2D
 var system_collectibles 		:int
 var resetting := false
 var current_menu :Control = null
-var collectible_cursor_menu :PackedScene = preload("res://CursorMenus/CollectibleCursorMenu.tscn")
+var cursor_menu :PackedScene = preload("res://CursorMenus/CursorMenu.tscn")
 
 func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
@@ -45,12 +45,12 @@ func system_reset(set_ship_rotation: float, set_ship_cargo: int) -> void:
 func _on_new_target(target_object: Object, world_position, screen_space_position: Vector2) -> void:
 	if current_menu:
 		current_menu.queue_free()
-	var new_menu = collectible_cursor_menu.instantiate()
+	var new_menu = cursor_menu.instantiate()
 	new_menu.position = screen_space_position
 	#I'm assuming the menu can deal with target_object potentially being null
-	new_menu.target = target_object 
-	$UICanvasLayer.add_child(new_menu)
+	new_menu.target = target_object
 	new_menu.action_chosen.connect(_on_action_chosen.bind(world_position))
+	$UICanvasLayer.add_child(new_menu)
 	current_menu = new_menu
 	
 func _on_action_chosen(action: String, target, world_position) -> void:
@@ -63,6 +63,9 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 		else:
 			print(unreachable_message)
 	else:
-		$Ship.set_target_position(world_position)
+		if action == "move_to":
+			$Ship.set_target_position(world_position)
+		else:
+			print(unreachable_message)
 	current_menu.queue_free()
 	current_menu = null

@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dyqdylqx5hav3" path="res://Spawners/CollectibleSpawner.tscn" id="1_ysovm"]
 [ext_resource type="Script" uid="uid://crf8nlidgh7rx" path="res://System/GridBackground.gd" id="2_gacec"]
 [ext_resource type="Script" uid="uid://xm4jm2u4snrc" path="res://System/UICanvasLabel.gd" id="2_xds23"]
+[ext_resource type="Script" uid="uid://bn3ucs8yh7fhx" path="res://System/EmptySpace.gd" id="8_lg61g"]
 
 [sub_resource type="SystemFont" id="SystemFont_fjbyk"]
 
@@ -39,6 +40,9 @@ script = ExtResource("1_0qcro")
 show_behind_parent = true
 color = Color(0.050980393, 0.05882353, 0.07058824, 1)
 script = ExtResource("2_gacec")
+
+[node name="EmptySapce" type="Node" parent="." unique_id=1415416465]
+script = ExtResource("8_lg61g")
 
 [node name="Ship" parent="." unique_id=1889162700 instance=ExtResource("1_akwq5")]
 
