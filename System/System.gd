@@ -48,8 +48,12 @@ func _on_new_target(target_object: Object, world_position, screen_space_position
 	var new_menu = cursor_menu.instantiate()
 	new_menu.position = screen_space_position
 	#I'm assuming the menu can deal with target_object potentially being null
-	new_menu.target = target_object
+	if target_object:
+		new_menu.target = target_object
+	else:
+		target_object = $EmptySpace
 	new_menu.action_chosen.connect(_on_action_chosen.bind(world_position))
+	new_menu.menu_actions = target_object.get_menu_actions()
 	$UICanvasLayer.add_child(new_menu)
 	current_menu = new_menu
 	
