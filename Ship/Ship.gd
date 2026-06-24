@@ -31,3 +31,8 @@ func _process(delta: float) -> void:
 		
 func set_target_position(pos: Vector2) -> void:
 	target_position = pos
+
+func set_orbit(orbit_distance, orbit_speed: float, object_position: Vector2) -> void:
+		var direction_to_ship = position - object_position
+		var orbital_angle = atan2(cos(direction_to_ship), sin(direction_to_ship))
+		target_position = object_position + orbit_distance * orbital_angle
