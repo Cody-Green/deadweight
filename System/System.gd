@@ -63,7 +63,7 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 	if target:
 		var direction_to_target = target.global_position - $Ship.global_position
 		var orbit_distance :float = 200.0
-		var orbit_speed :float = 1.0
+		var orbit_speed :float = 2.0
 		match action:
 			"approach": $Ship.set_target_position(
 				$Ship.global_position +
