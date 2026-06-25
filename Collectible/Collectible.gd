@@ -5,7 +5,7 @@
 extends Node2D
 
 var mass :float
-var actions :Array = [{"text" : "Approach", "id" : "approach"}, {"text" : "Collect", "id" : "collect"}]
+var actions :Array = [{"text" : "Approach", "id" : "approach"}, {"text" : "Collect", "id" : "collect"}, {"text" : "Orbit", "id" : "orbit"}]
 func _ready() -> void:
 	$CollisionArea.area_entered.connect(_on_area_entered)
 	mass = randf_range(5.0, 50.0)
