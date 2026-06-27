@@ -12,7 +12,7 @@ func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
 	child_exiting_tree.connect(_on_collectible_removed)
 	$InputManager.target_selected.connect(_on_new_target)
-	$InputManager.zoom_level_changed.connect(_on_camra_zoom)
+	$InputManager.zoom_level_changed.connect(_on_camera_zoom)
 	$InputManager.camera_panned.connect(_on_camera_pan)
 	
 func _process(_delta: float) -> void:
@@ -89,11 +89,11 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 	current_menu.queue_free()
 	current_menu = null
 	
-func _on_camra_zoom(direction: GameState.ZoomDirection) -> void:
+func _on_camera_zoom(direction: GameState.ZoomDirection) -> void:
 	$SystemCamera.camera_zoom(direction)
 	
 func _on_camera_pan(direction: GameState.PanDirection) -> void:
-	
+	$SystemCamera.camera_pan(direction)
 
 func _draw() -> void:
 	if GameState.debug:
