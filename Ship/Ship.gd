@@ -26,29 +26,10 @@ func _ready() -> void:
 	$Hull.set_hull(hull_length, hull_width, notch_scale)
 
 func _process(delta: float) -> void:
-	
-	
-	if (target_position - position).length() > stopping_epsilon and not is_orbiting:
-		target_angle = atan2(target_position.y - position.y, target_position.x - position.x)
-		rotation = rotate_toward(rotation, target_angle, turn_speed * delta)
-		if abs(angle_difference(rotation, target_angle)) < rotation_epsilon:
-			#Ship moves by the smaller distance of physics step (speed * delta) and remaining distance ((target_position - position).length()
-			position += Vector2(cos(rotation), sin(rotation)) * min(speed * delta, (target_position - position).length())
-			GameState.player_rotation = rotation
-		
 	if is_orbiting:
-		orbital_angle += orbit_speed * delta
-		target_position = orbit_center + Vector2(cos(orbital_angle), sin(orbital_angle)) * orbit_distance
-		
-		
-		if (target_position - position).length() > stopping_epsilon:
-			target_angle = atan2(target_position.y - position.y, target_position.x - position.x)
-			rotation = rotate_toward(rotation, target_angle, turn_speed * delta)
-			if abs(angle_difference(rotation, target_angle)) < rotation_epsilon:
-				#Ship moves by the smaller distance of physics step (speed * delta) and remaining distance ((target_position - position).length()
-				position += (target_position - position).normalized() * min(speed * delta, (target_position - position).length())
-				GameState.player_rotation = rotation
-		
+		orbit_target(delta)
+	else:
+		move_to_target(delta)
 func set_target_position(pos: Vector2) -> void:
 	is_orbiting = false
 	target_position = pos
@@ -61,6 +42,26 @@ func set_orbit(orbit_distance, orbit_speed: float, object_position: Vector2) -> 
 		self.orbit_speed = orbit_speed
 		self.orbital_angle = orbital_angle
 		is_orbiting = true
+
+func move_to_target(delta: float) -> void:
+	var to_target_vector := target_position - position
+	if to_target_vector.length() <= stopping_epsilon:
+		return
+	target_angle = to_target_vector.angle()
+	rotation = rotate_toward(rotation, target_angle, delta)
+	if abs(angle_difference(rotation, target_angle)) < rotation_epsilon:
+		#Ship moves by the smaller distance of physics step (speed * delta) and remaining distance ((target_position - position).length()
+		position += Vector2(cos(rotation), sin(rotation)) * min(speed * delta, (target_position - position).length())
+		GameState.player_rotation = rotation
+		
+func orbit_target(delta) -> void:
+	var to_orbital_center := target_position - position
+	orbital_angle += orbit_speed * delta
+	target_position = orbit_center + Vector2(cos(orbital_angle), sin(orbital_angle)) * orbit_distance
+	position += to_orbital_center.normalized() * min(speed * delta, (target_position - position).length())
+	rotation = rotate_toward(rotation, to_orbital_center.angle(), turn_speed * delta)
+	GameState.player_rotation = rotation
+
 
 func _draw() -> void:
 	if GameState.debug:
