@@ -19,9 +19,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	if (target_position - position).length() >= stopping_threshold:
+	if (target_position - position).length():
 		rotation = atan2(target_position.y - position.y, target_position.x - position.x)
-		position += speed * Vector2(cos(rotation), sin(rotation)) * delta
+		#Ship moves by the smaller distance of physics step (speed * delta) and remaining distance ((target_position - position).length()
+		position += Vector2(cos(rotation), sin(rotation)) * min(speed * delta, (target_position - position).length())
 		GameState.player_rotation = rotation
 		
 	if is_orbiting:
