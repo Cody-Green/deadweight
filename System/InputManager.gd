@@ -4,6 +4,7 @@ extends Node2D
 
 signal target_selected(selected_object, global_mouse_position, screen_space_mouse_position)
 signal zoom_level_changed(zoom_direction)
+signal camera_panned(pan_direction)
 var selected_object :Object = null
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -26,3 +27,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		zoom_level_changed.emit(GameState.ZoomDirection.IN)
 	if event.is_action_pressed("zoom_out"):
 		zoom_level_changed.emit(GameState.ZoomDirection.OUT)
+	if event.is_action_pressed("pan_up"):
+		camera_panned.emit(GameState.PanDirection.UP)
+	if event.is_action_pressed("pan_down"):
+		camera_panned.emit(GameState.PanDirection.DOWN)
+	if event.is_action_pressed("pan_left"):
+		camera_panned.emit(GameState.PanDirection.LEFT)
+	if event.is_action_pressed("pan_right"):
+		camera_panned.emit(GameState.PanDirection.RIGHT)

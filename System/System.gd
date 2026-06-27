@@ -12,7 +12,8 @@ func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
 	child_exiting_tree.connect(_on_collectible_removed)
 	$InputManager.target_selected.connect(_on_new_target)
-	$InputManager.zoom_level_changed.connect(_on_zoom)
+	$InputManager.zoom_level_changed.connect(_on_camra_zoom)
+	$InputManager.camera_panned.connect(_on_camera_pan)
 	
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("system_reset"):
@@ -77,7 +78,7 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 			"collect": $Ship.set_target_position(
 				$Ship.global_position +
 				direction_to_target.normalized() * 
-				(direction_to_target.length() - target.collect_range - ($Ship/Hull.hull_length/2) + 0.5))
+				(direction_to_target.length() - target.collect_range))
 			"orbit": $Ship.set_orbit(orbit_distance, orbit_speed, target.global_position)
 			_: print(unreachable_message)
 			
@@ -88,8 +89,11 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 	current_menu.queue_free()
 	current_menu = null
 	
-func _on_zoom(direction: GameState.ZoomDirection) -> void:
+func _on_camra_zoom(direction: GameState.ZoomDirection) -> void:
 	$SystemCamera.camera_zoom(direction)
+	
+func _on_camera_pan(direction: GameState.PanDirection) -> void:
+	
 
 func _draw() -> void:
 	if GameState.debug:

@@ -12,10 +12,13 @@ var orbit_speed 		:float = 0.0
 var orbital_angle 		:float = 0.0
 var orbit_center 		:Vector2 = Vector2(0, 0)
 var is_orbiting 		:bool  = false
-
+var hull_length :float = 64.0
+var hull_width :float = 32.0
+var notch_scale :float = 0.28
 
 func _ready() -> void:
 	rotation = GameState.player_rotation
+	$Hull.set_hull(hull_length, hull_width, notch_scale)
 
 func _process(delta: float) -> void:
 	
