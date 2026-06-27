@@ -81,7 +81,5 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 	current_menu.queue_free()
 	current_menu = null
 	
-func _on_zoom(zoom_direction: String) -> void:
-	match zoom_direction:
-		"in" : $SystemCamera.zoom_level = clamp($SystemCamera.zoom_level + $SystemCamera.zoom_step, 0.4, 0.8)
-		"out" : $SystemCamera.zoom_level = clamp($SystemCamera.zoom_level - $SystemCamera.zoom_step, 0.4, 0.8)
+func _on_zoom(direction: GameState.ZoomDirection) -> void:
+	$SystemCamera.camera_zoom(direction)
