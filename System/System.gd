@@ -6,6 +6,7 @@ var system_collectibles :int
 var resetting := false
 var current_menu :Control = null
 var cursor_menu :PackedScene = preload("res://CursorMenus/CursorMenu.tscn")
+var collectible_positions :Array = []
 
 func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
@@ -22,6 +23,7 @@ func _on_collectible_added(node) -> void:
 	if node.is_in_group("collectibles"):
 		print("system_colletible added - system_collectible = ", system_collectibles)
 		system_collectibles += 1
+		collectible_positions.append(node.position)
 
 func _on_collectible_removed(node) -> void:
 	if not is_inside_tree():
@@ -64,13 +66,16 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 	if target:
 		var direction_to_target = target.global_position - $Ship.global_position
 		var orbit_distance :float = 200.0
-		var orbit_speed :float = 4.0
+		var orbit_speed :float = 2.0
 		match action:
 			"approach": $Ship.set_target_position(
 				$Ship.global_position +
 				direction_to_target.normalized() * 
 				(direction_to_target.length() - 100))
-			"collect": $Ship.set_target_position(target.global_position)
+			"collect": $Ship.set_target_position(
+				$Ship.global_position +
+				direction_to_target.normalized() * 
+				(direction_to_target.length() - $Ship/Hull.hull_length/2))
 			"orbit": $Ship.set_orbit(orbit_distance, orbit_speed, target.global_position)
 			_: print(unreachable_message)
 			
@@ -83,3 +88,11 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 	
 func _on_zoom(direction: GameState.ZoomDirection) -> void:
 	$SystemCamera.camera_zoom(direction)
+
+func draw_collectible_ghost(pos: Vector2) -> void:
+	draw_circle(pos, 20, Color(0x4ec9b01e), true, -1, true)
+
+func _draw() -> void:
+	if GameState.debug:
+		for pos in collectible_positions:
+			draw_circle(pos, 20, Color(0x4ec9b01e), true, -1, true)

@@ -5,8 +5,8 @@
 
 extends CollisionShape2D
 
-var circle_radius 		:float = 5
-var circle_position 	:Vector2 = Vector2(32 - circle_radius/2, 0)
+var circle_radius 		:float = 0.15
+var circle_position 	:Vector2 = Vector2(32 - circle_radius, 0)
 
 func _ready() -> void:
 	shape = CircleShape2D.new()

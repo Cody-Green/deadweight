@@ -7,7 +7,6 @@ extends Node2D
 var target_position 	:Vector2 = Vector2(0, 0)
 var speed				:int = 400
 var stopping_threshold 	:float = 10
-
 var orbit_distance 		:float = 0.0
 var orbit_speed 		:float = 0.0
 var orbital_angle 		:float = 0.0
@@ -41,3 +40,7 @@ func set_orbit(orbit_distance, orbit_speed: float, object_position: Vector2) -> 
 		self.orbit_speed = orbit_speed
 		self.orbital_angle = orbital_angle
 		is_orbiting = true
+
+func _draw() -> void:
+	if GameState.debug:
+		draw_line(Vector2($Hull.hull_length/2, -$Hull.hull_width/2), Vector2($Hull.hull_length/2, $Hull.hull_width/2), Color.DARK_MAGENTA, 2, true)
