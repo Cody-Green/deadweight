@@ -25,13 +25,13 @@ func _on_collectible_added(node) -> void:
 		system_collectibles += 1
 
 func _on_collectible_removed(node) -> void:
-	queue_redraw()
+	
 	if not is_inside_tree():
 		return
 	if node.is_in_group("collectibles"):
 		system_collectibles -= 1
 		ghost_collectible_positions.append(node.position)
-		
+		queue_redraw()
 		print("system_colletible removed - system_collectible = ", system_collectibles)
 		if system_collectibles <= 0 and not resetting:
 			print("last collectible collected -> triggers reset")
@@ -77,7 +77,7 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 			"collect": $Ship.set_target_position(
 				$Ship.global_position +
 				direction_to_target.normalized() * 
-				(direction_to_target.length() - $Ship/Hull.hull_length/2))
+				(direction_to_target.length() - $Ship/Hull.hull_length))
 			"orbit": $Ship.set_orbit(orbit_distance, orbit_speed, target.global_position)
 			_: print(unreachable_message)
 			

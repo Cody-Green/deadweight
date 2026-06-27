@@ -38,6 +38,7 @@ theme = SubResource("Theme_lg61g")
 script = ExtResource("2_xds23")
 
 [node name="Grid" type="Node2D" parent="." unique_id=1897605882]
+show_behind_parent = true
 script = ExtResource("1_0qcro")
 
 [node name="GridBackground" type="Polygon2D" parent="Grid" unique_id=2014021703]
