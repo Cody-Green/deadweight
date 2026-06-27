@@ -43,4 +43,4 @@ func set_orbit(orbit_distance, orbit_speed: float, object_position: Vector2) -> 
 
 func _draw() -> void:
 	if GameState.debug:
-		draw_line(Vector2($Hull.hull_length/2, -$Hull.hull_width/2), Vector2($Hull.hull_length/2, $Hull.hull_width/2), Color.DARK_MAGENTA, 2, true)
+		pass #draw_line(Vector2($Hull.hull_length/2, -$Hull.hull_width/2), Vector2($Hull.hull_length/2, $Hull.hull_width/2), Color(0xff00ff67), 1, true)

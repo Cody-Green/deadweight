@@ -6,7 +6,7 @@ var system_collectibles :int
 var resetting := false
 var current_menu :Control = null
 var cursor_menu :PackedScene = preload("res://CursorMenus/CursorMenu.tscn")
-var collectible_positions :Array = []
+var ghost_collectible_positions :Array = []
 
 func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
@@ -23,13 +23,15 @@ func _on_collectible_added(node) -> void:
 	if node.is_in_group("collectibles"):
 		print("system_colletible added - system_collectible = ", system_collectibles)
 		system_collectibles += 1
-		collectible_positions.append(node.position)
 
 func _on_collectible_removed(node) -> void:
+	queue_redraw()
 	if not is_inside_tree():
 		return
 	if node.is_in_group("collectibles"):
 		system_collectibles -= 1
+		ghost_collectible_positions.append(node.position)
+		
 		print("system_colletible removed - system_collectible = ", system_collectibles)
 		if system_collectibles <= 0 and not resetting:
 			print("last collectible collected -> triggers reset")
@@ -89,10 +91,7 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 func _on_zoom(direction: GameState.ZoomDirection) -> void:
 	$SystemCamera.camera_zoom(direction)
 
-func draw_collectible_ghost(pos: Vector2) -> void:
-	draw_circle(pos, 20, Color(0x4ec9b01e), true, -1, true)
-
 func _draw() -> void:
 	if GameState.debug:
-		for pos in collectible_positions:
-			draw_circle(pos, 20, Color(0x4ec9b01e), true, -1, true)
+		for pos in ghost_collectible_positions:
+			draw_circle(pos, 20, Color(0xff00ff67), true, -1, true)
