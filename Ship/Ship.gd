@@ -7,8 +7,7 @@ extends Node2D
 var target_position 	:Vector2 = Vector2(0, 0)
 var speed				:int = 400
 var stopping_threshold 	:float = 10
-var zoom_step			:float = 0.1
-var zoom_level			:float = 0.6
+
 var orbit_distance 		:float = 0.0
 var orbit_speed 		:float = 0.0
 var orbital_angle 		:float = 0.0
@@ -17,7 +16,6 @@ var is_orbiting 		:bool  = false
 
 
 func _ready() -> void:
-	$Camera2D.zoom = Vector2(zoom_level, zoom_level)
 	rotation = GameState.player_rotation
 
 func _process(delta: float) -> void:
@@ -30,14 +28,6 @@ func _process(delta: float) -> void:
 	if is_orbiting:
 		orbital_angle += orbit_speed * delta
 		target_position = orbit_center + Vector2(cos(orbital_angle), sin(orbital_angle)) * orbit_distance
-	
-	if Input.is_action_just_pressed("zoom_in"):
-		zoom_level = clamp(zoom_level + zoom_step, 0.4, 0.8)
-		$Camera2D.zoom = Vector2(zoom_level, zoom_level)
-		
-	if Input.is_action_just_pressed("zoom_out"):
-		zoom_level = clamp(zoom_level - zoom_step, 0.4, 0.8)
-		$Camera2D.zoom = Vector2(zoom_level, zoom_level)
 		
 func set_target_position(pos: Vector2) -> void:
 	is_orbiting = false

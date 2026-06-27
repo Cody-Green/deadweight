@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ckg4kg6rugsp0" path="res://System/UICanvasLayer.gd" id="1_xds23"]
 [ext_resource type="PackedScene" uid="uid://dyqdylqx5hav3" path="res://Spawners/CollectibleSpawner.tscn" id="1_ysovm"]
 [ext_resource type="Script" uid="uid://crf8nlidgh7rx" path="res://System/GridBackground.gd" id="2_gacec"]
+[ext_resource type="Script" uid="uid://b3ivx6aetteia" path="res://System/SystemCamera.gd" id="2_v8nng"]
 [ext_resource type="Script" uid="uid://xm4jm2u4snrc" path="res://System/UICanvasLabel.gd" id="2_xds23"]
 [ext_resource type="Script" uid="uid://bn3ucs8yh7fhx" path="res://System/EmptySpace.gd" id="8_lg61g"]
 
@@ -18,6 +19,9 @@ Label/colors/font_color = Color(0.5411765, 0.5764706, 0.59607846, 1)
 
 [node name="System" type="Node2D" unique_id=2141992628]
 script = ExtResource("1_lg61g")
+
+[node name="SystemCamera" type="Camera2D" parent="." unique_id=1256343847]
+script = ExtResource("2_v8nng")
 
 [node name="InputManager" type="Node2D" parent="." unique_id=1575179162]
 script = ExtResource("1_fjbyk")

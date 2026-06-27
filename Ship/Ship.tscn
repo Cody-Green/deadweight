@@ -14,8 +14,6 @@ color = Color(0.78431374, 0.8, 0.8156863, 1)
 antialiased = true
 script = ExtResource("1_11244")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=978544980]
-
 [node name="ShipUI" type="Node2D" parent="." unique_id=1840524345]
 script = ExtResource("3_5p3wb")
 

@@ -3,7 +3,9 @@
 extends Node2D
 
 signal target_selected(selected_object, global_mouse_position, screen_space_mouse_position)
+signal zoom_level_changed(zoom_direction)
 var selected_object :Object = null
+var zoom_direction :Dictionary = {"zoom in" : "in", "zoom out" : "out"}
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("target_menu"):
@@ -21,3 +23,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			selected_object = null
 		target_selected.emit(selected_object, global_mouse_position, screen_space_position)
+	if event.is_action_pressed("zoom_in"):
+		zoom_level_changed.emit(zoom_direction.get("zoom in"))
+	if event.is_action_pressed("zoom_out"):
+		zoom_level_changed.emit(zoom_direction.get("zoom out"))

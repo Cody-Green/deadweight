@@ -2,7 +2,7 @@
 
 extends Node2D
 
-var system_collectibles 		:int
+var system_collectibles :int
 var resetting := false
 var current_menu :Control = null
 var cursor_menu :PackedScene = preload("res://CursorMenus/CursorMenu.tscn")
@@ -11,6 +11,7 @@ func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
 	child_exiting_tree.connect(_on_collectible_removed)
 	$InputManager.target_selected.connect(_on_new_target)
+	$InputManager.zoom_level_changed.connect(_on_zoom)
 	
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("system_reset"):
@@ -63,7 +64,7 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 	if target:
 		var direction_to_target = target.global_position - $Ship.global_position
 		var orbit_distance :float = 200.0
-		var orbit_speed :float = 2.0
+		var orbit_speed :float = 4.0
 		match action:
 			"approach": $Ship.set_target_position(
 				$Ship.global_position +
@@ -79,3 +80,8 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 			_: print(unreachable_message)
 	current_menu.queue_free()
 	current_menu = null
+	
+func _on_zoom(zoom_direction: String) -> void:
+	match zoom_direction:
+		"in" : $SystemCamera.zoom_level = clamp($SystemCamera.zoom_level + $SystemCamera.zoom_step, 0.4, 0.8)
+		"out" : $SystemCamera.zoom_level = clamp($SystemCamera.zoom_level - $SystemCamera.zoom_step, 0.4, 0.8)
