@@ -77,7 +77,7 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 			"collect": $Ship.set_target_position(
 				$Ship.global_position +
 				direction_to_target.normalized() * 
-				(direction_to_target.length() - $Ship/Hull.hull_length))
+				(direction_to_target.length() - target.collect_range - ($Ship/Hull.hull_length/2)))
 			"orbit": $Ship.set_orbit(orbit_distance, orbit_speed, target.global_position)
 			_: print(unreachable_message)
 			
@@ -94,4 +94,4 @@ func _on_zoom(direction: GameState.ZoomDirection) -> void:
 func _draw() -> void:
 	if GameState.debug:
 		for pos in ghost_collectible_positions:
-			draw_circle(pos, 20, Color(0xff00ff67), true, -1, true)
+			draw_circle(pos, 30, Color(0xff00ff67), true, -1, true)
