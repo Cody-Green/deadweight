@@ -77,7 +77,7 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 			"collect": $Ship.set_target_position(
 				$Ship.global_position +
 				direction_to_target.normalized() * 
-				(direction_to_target.length() - target.collect_range - ($Ship/Hull.hull_length/2)))
+				(direction_to_target.length() - target.collect_range - ($Ship/Hull.hull_length/2) + 0.5))
 			"orbit": $Ship.set_orbit(orbit_distance, orbit_speed, target.global_position)
 			_: print(unreachable_message)
 			

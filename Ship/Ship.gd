@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	
-	if (target_position - position).length():
+	if (target_position - position).length() > 0.05:
 		rotation = atan2(target_position.y - position.y, target_position.x - position.x)
 		#Ship moves by the smaller distance of physics step (speed * delta) and remaining distance ((target_position - position).length()
 		position += Vector2(cos(rotation), sin(rotation)) * min(speed * delta, (target_position - position).length())
