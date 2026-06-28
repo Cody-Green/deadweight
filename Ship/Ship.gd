@@ -17,7 +17,6 @@ var hull_width 			:float = 32.0
 var notch_scale 		:float = 0.28
 var turn_speed 			:float = 2.0
 var target_angle 		:float = 0.0
-
 var rotation_epsilon 	:float = .02
 
 func _ready() -> void:
@@ -48,18 +47,18 @@ func move_to_target(delta: float) -> void:
 	if to_target_vector.length() <= stopping_epsilon:
 		return
 	target_angle = to_target_vector.angle()
-	rotation = rotate_toward(rotation, target_angle, delta)
+	rotation = rotate_toward(rotation, target_angle, turn_speed * delta)
 	if abs(angle_difference(rotation, target_angle)) < rotation_epsilon:
 		#Ship moves by the smaller distance of physics step (speed * delta) and remaining distance ((target_position - position).length()
 		position += Vector2(cos(rotation), sin(rotation)) * min(speed * delta, (target_position - position).length())
 		GameState.player_rotation = rotation
 		
 func orbit_target(delta) -> void:
-	var to_orbital_center := target_position - position
 	orbital_angle += orbit_speed * delta
 	target_position = orbit_center + Vector2(cos(orbital_angle), sin(orbital_angle)) * orbit_distance
+	var to_orbital_center := target_position - position
+	rotation = orbital_angle + PI/2 
 	position += to_orbital_center.normalized() * min(speed * delta, (target_position - position).length())
-	rotation = rotate_toward(rotation, to_orbital_center.angle(), turn_speed * delta)
 	GameState.player_rotation = rotation
 
 
