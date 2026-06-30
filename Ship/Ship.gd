@@ -33,6 +33,7 @@ const TRAIL_GAP  := 16     # only drop a new point after moving this far (even s
 
 func _ready() -> void:
 	rotation = GameState.player_rotation
+	target_position = GameState.player_position
 	if GameState.player_position == Vector2.ZERO:
 		position = Vector2.ZERO
 	else:

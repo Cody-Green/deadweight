@@ -12,6 +12,7 @@ func _ready() -> void:
 	else:
 		zoom = GameState.zoom
 		zoom_level = zoom.x
+	position = GameState.player_position
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("pan_up"):
