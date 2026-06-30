@@ -18,6 +18,7 @@ func _ready() -> void:
 	for i in range(num_fields):
 		seed_field(field_position)
 		field_position += Vector2(randf_range(field_position_min, field_position_max), randf_range(field_position_min, field_position_max))
+
 func seed_field(field_position: Vector2) -> void:
 	for i in range(num_collectibles):
 		var new_collectible = collectible.instantiate()

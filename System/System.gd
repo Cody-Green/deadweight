@@ -20,9 +20,6 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("system_reset"):
 		system_reset($Ship.rotation, $Ship.global_position, $SystemCamera.zoom, 0)
 
-func _on_ship_position_changed(_position: Vector2) -> void:
-	$UIController/ShipCargoLabel.position = Vector2(_position.x - $UIController/ShipCargoLabel.size.x, _position.y - 50)
-
 func _on_camera_reset() -> void:
 	$SystemCamera.center_camera_on_player($Ship.global_position)
 
