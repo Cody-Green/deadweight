@@ -16,4 +16,3 @@ func _ready() -> void:
 		new_collectible.add_to_group("collectibles")
 		new_collectible.position = Vector2(randf_range(position_min, position_max), randf_range(position_min, position_max))
 		get_parent().add_child.call_deferred(new_collectible)
-	print("spawned: ", num_collectibles, " collectibles")

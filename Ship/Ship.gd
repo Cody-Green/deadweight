@@ -6,7 +6,7 @@ extends Node2D
 
 signal ship_position_changed(position)
 
-enum OrbitPhase 		{ APPROACHING, ALIGNING, ORBITING }
+#enum OrbitPhase 		{ APPROACHING, ALIGNING, ORBITING }
 
 var orbit_center 		:Vector2 = Vector2(0, 0)
 var target_position 	:Vector2 = Vector2(0, 0)
@@ -26,11 +26,11 @@ var orbital_angle 		:float = 0.0
 var is_orbiting 		:bool  = false
 var orbit_distance 		:float = 200.0
 var orbit_speed 		:float = 3.0
-var orbit_phase 		:OrbitPhase
+#var orbit_phase 		:OrbitPhase
 
 # --- debug trail ---
 var trail_points : Array[Vector2] = []
-const TRAIL_MAX  := 6000      # how many points to keep (~the last stretch of path)
+const TRAIL_MAX  := 100      # how many points to keep (~the last stretch of path) - Need to adjust this to see longer paths
 const TRAIL_GAP  := 16     # only drop a new point after moving this far (even spacing)
 
 func _ready() -> void:
@@ -58,7 +58,7 @@ func _process(delta: float) -> void:
 			trail_points.append(global_position)
 			if trail_points.size() > TRAIL_MAX:
 				trail_points.pop_front()
-	queue_redraw()
+			queue_redraw()
 		
 func set_target_position(pos: Vector2) -> void:
 	is_orbiting = false
@@ -70,7 +70,7 @@ func set_orbit(object_position: Vector2) -> void:
 		var heading := Vector2(cos(rotation), sin(rotation))
 		orbit_speed = abs(orbit_speed) * signf((position - orbit_center).cross(heading))
 		target_position = orbit_center + Vector2(cos(orbital_angle), sin(orbital_angle)) * orbit_distance
-		orbit_phase = OrbitPhase.APPROACHING
+#		orbit_phase = OrbitPhase.APPROACHING
 		is_orbiting = true
 
 func move_to_target(delta: float) -> void:
@@ -95,11 +95,11 @@ func orbit_target(delta: float) -> void:
 	ship_position_changed.emit(position)
 	GameState.player_rotation = rotation
 
-func align_to_tangent(delta: float) -> void:
-	var tangent := orbital_angle + PI/2
-	rotation = rotate_toward(rotation, tangent, turn_speed * delta)
-	if abs(angle_difference(rotation, tangent)) < rotation_epsilon:
-		orbit_phase = OrbitPhase.ORBITING
+#func align_to_tangent(delta: float) -> void:
+#	var tangent := orbital_angle + PI/2
+#	rotation = rotate_toward(rotation, tangent, turn_speed * delta)
+#	if abs(angle_difference(rotation, tangent)) < rotation_epsilon:
+#		orbit_phase = OrbitPhase.ORBITING
 	
 func _draw() -> void:
 	if not GameState.debug or trail_points.size() < 2:

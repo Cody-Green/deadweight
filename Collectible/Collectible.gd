@@ -19,7 +19,6 @@ func _ready() -> void:
 	
 func _on_area_entered(area) -> void:
 	if area.is_in_group("player"):
-		print(">>> collected, mass=", mass) 
 		GameState.update_cargo(mass)
 		queue_free()
 

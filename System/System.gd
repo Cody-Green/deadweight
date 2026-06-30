@@ -6,7 +6,6 @@ var system_collectibles :int
 var resetting := false
 var current_menu :Control = null
 var cursor_menu :PackedScene = preload("res://CursorMenus/CursorMenu.tscn")
-var ghost_collectible_positions :Array = []
 
 func _ready() -> void:
 	child_entered_tree.connect(_on_collectible_added)
@@ -18,19 +17,18 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("system_reset"):
-		print("q pressed -> triggers reset")
 		system_reset($Ship.rotation, 0)
-		$Ship.ship_position_changed.connect(_on_ship_position_changed)
+	
+	$Ship.ship_position_changed.connect(_on_ship_position_changed)
 
 func _on_ship_position_changed(_position: Vector2) -> void:
 	$UICanvasLayer/Label.position = Vector2(_position.x - $UICanvasLayer/Label.size.x, _position.y - 50)
 
 func _on_camera_reset() -> void:
-	$SystemCamera.center_camera_on_player($Ship.position)
+	$SystemCamera.center_camera_on_player($Ship.global_position)
 
 func _on_collectible_added(node) -> void:
 	if node.is_in_group("collectibles"):
-		print("system_colletible added - system_collectible = ", system_collectibles)
 		system_collectibles += 1
 
 func _on_collectible_removed(node) -> void:
@@ -39,17 +37,11 @@ func _on_collectible_removed(node) -> void:
 
 	if node.is_in_group("collectibles"):
 		system_collectibles -= 1
-		ghost_collectible_positions.append(node.position)
-		queue_redraw()
-		print("system_colletible removed - system_collectible = ", system_collectibles)
 		if system_collectibles <= 0 and not resetting:
-			print("last collectible collected -> triggers reset")
 			system_reset($Ship.rotation, 0)
 
 func system_reset(set_ship_rotation: float, set_ship_cargo: int) -> void:
-	print(">>> system_reset called, resetting=", resetting, " count=", system_collectibles)
 	if resetting:
-		print(">>> guard caught re-entry")
 		return
 	resetting = true
 	GameState.player_cargo = set_ship_cargo
@@ -98,9 +90,6 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 
 func _on_camera_zoom(direction: GameState.ZoomDirection) -> void:
 	$SystemCamera.camera_zoom(direction)
-
-func _on_camera_pan(direction: GameState.PanDirection) -> void:
-	$SystemCamera.camera_pan(direction)
 
 func _draw() -> void:
 	if GameState.debug:
