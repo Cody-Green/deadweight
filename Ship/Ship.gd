@@ -4,8 +4,6 @@
 
 extends Node2D
 
-signal ship_position_changed(position)
-
 #enum OrbitPhase 		{ APPROACHING, ALIGNING, ORBITING }
 
 var orbit_center 		:Vector2 = Vector2(0, 0)
@@ -35,7 +33,11 @@ const TRAIL_GAP  := 16     # only drop a new point after moving this far (even s
 
 func _ready() -> void:
 	rotation = GameState.player_rotation
-	
+	if GameState.player_position == Vector2.ZERO:
+		position = Vector2.ZERO
+	else:
+		position = GameState.player_position
+	position = GameState.player_position
 	$Hull.set_hull(hull_length, hull_width, notch_scale)
 
 func _process(delta: float) -> void:
@@ -58,7 +60,7 @@ func _process(delta: float) -> void:
 			trail_points.append(global_position)
 			if trail_points.size() > TRAIL_MAX:
 				trail_points.pop_front()
-			queue_redraw()
+		queue_redraw()
 		
 func set_target_position(pos: Vector2) -> void:
 	is_orbiting = false
@@ -82,7 +84,7 @@ func move_to_target(delta: float) -> void:
 	if abs(angle_difference(rotation, target_angle)) < rotation_epsilon:
 		#Ship moves by the smaller distance of physics step (speed * delta) and remaining distance ((target_position - position).length()
 		position += Vector2(cos(rotation), sin(rotation)) * min(speed * delta, (target_position - position).length())
-		ship_position_changed.emit(position)
+		GameState.player_position = position
 		GameState.player_rotation = rotation
 		
 func orbit_target(delta: float) -> void:
@@ -92,7 +94,7 @@ func orbit_target(delta: float) -> void:
 	rotation = rotate_toward(rotation, to_point.angle(), turn_speed * delta)   # face where you're heading
 	#rotation = to_point.angle()
 	position += to_point.normalized() * min(speed * delta, to_point.length())
-	ship_position_changed.emit(position)
+	GameState.player_position = position
 	GameState.player_rotation = rotation
 
 #func align_to_tangent(delta: float) -> void:

@@ -8,6 +8,7 @@ var current_menu :Control = null
 var cursor_menu :PackedScene = preload("res://CursorMenus/CursorMenu.tscn")
 
 func _ready() -> void:
+	$UIController.player_ship = $Ship
 	child_entered_tree.connect(_on_collectible_added)
 	child_exiting_tree.connect(_on_collectible_removed)
 	$InputManager.target_selected.connect(_on_new_target)
@@ -17,12 +18,10 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("system_reset"):
-		system_reset($Ship.rotation, 0)
-	
-	$Ship.ship_position_changed.connect(_on_ship_position_changed)
+		system_reset($Ship.rotation, $Ship.global_position, $SystemCamera.zoom, 0)
 
 func _on_ship_position_changed(_position: Vector2) -> void:
-	$UICanvasLayer/Label.position = Vector2(_position.x - $UICanvasLayer/Label.size.x, _position.y - 50)
+	$UIController/ShipCargoLabel.position = Vector2(_position.x - $UIController/ShipCargoLabel.size.x, _position.y - 50)
 
 func _on_camera_reset() -> void:
 	$SystemCamera.center_camera_on_player($Ship.global_position)
@@ -38,14 +37,16 @@ func _on_collectible_removed(node) -> void:
 	if node.is_in_group("collectibles"):
 		system_collectibles -= 1
 		if system_collectibles <= 0 and not resetting:
-			system_reset($Ship.rotation, 0)
+			system_reset($Ship.rotation, $Ship.global_position, $SystemCamera.zoom, 0)
 
-func system_reset(set_ship_rotation: float, set_ship_cargo: int) -> void:
+func system_reset(set_ship_rotation: float, set_ship_position: Vector2, set_zoom: Vector2, set_ship_cargo: int) -> void:
 	if resetting:
 		return
 	resetting = true
 	GameState.player_cargo = set_ship_cargo
+	GameState.zoom = set_zoom
 	GameState.player_rotation = set_ship_rotation
+	GameState.player_position = set_ship_position
 	get_tree().reload_current_scene.call_deferred()
 
 func _on_new_target(target_object: Object, world_position, screen_space_position: Vector2) -> void:
@@ -62,7 +63,7 @@ func _on_new_target(target_object: Object, world_position, screen_space_position
 		# new_menu.target stays null — intended (move_to routes via world_position)
 
 	new_menu.action_chosen.connect(_on_action_chosen.bind(world_position))
-	$UICanvasLayer.add_child(new_menu)
+	$UIController.add_child(new_menu)
 	current_menu = new_menu
 	
 func _on_action_chosen(action: String, target, world_position) -> void:

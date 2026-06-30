@@ -4,14 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://d0h4tkb1ennfm" path="res://Ship/Ship.tscn" id="1_akwq5"]
 [ext_resource type="Script" uid="uid://vp8gg860mx1w" path="res://System/InputManager.gd" id="1_fjbyk"]
 [ext_resource type="Script" uid="uid://c7r576gd7f4ca" path="res://System/System.gd" id="1_lg61g"]
-[ext_resource type="Script" uid="uid://ckg4kg6rugsp0" path="res://System/UICanvasLayer.gd" id="1_xds23"]
+[ext_resource type="Script" uid="uid://ckg4kg6rugsp0" path="res://System/UIController.gd" id="1_xds23"]
 [ext_resource type="PackedScene" uid="uid://dyqdylqx5hav3" path="res://Spawners/CollectibleSpawner.tscn" id="1_ysovm"]
 [ext_resource type="Script" uid="uid://crf8nlidgh7rx" path="res://System/GridBackground.gd" id="2_gacec"]
 [ext_resource type="Script" uid="uid://b3ivx6aetteia" path="res://System/SystemCamera.gd" id="2_v8nng"]
-[ext_resource type="Script" uid="uid://xm4jm2u4snrc" path="res://System/UICanvasLabel.gd" id="2_xds23"]
 [ext_resource type="Script" uid="uid://bn3ucs8yh7fhx" path="res://System/EmptySpace.gd" id="8_lg61g"]
 
 [sub_resource type="SystemFont" id="SystemFont_fjbyk"]
+subpixel_positioning = 0
 
 [sub_resource type="Theme" id="Theme_lg61g"]
 default_font = SubResource("SystemFont_fjbyk")
@@ -28,14 +28,13 @@ script = ExtResource("1_fjbyk")
 
 [node name="CollectibleSpawner" parent="." unique_id=2085309862 instance=ExtResource("1_ysovm")]
 
-[node name="UICanvasLayer" type="CanvasLayer" parent="." unique_id=689331939]
+[node name="UIController" type="CanvasLayer" parent="." unique_id=689331939]
 script = ExtResource("1_xds23")
 
-[node name="Label" type="Label" parent="UICanvasLayer" unique_id=1397640465]
+[node name="ShipCargoLabel" type="Label" parent="UIController" unique_id=1397640465]
 offset_right = 40.0
 offset_bottom = 23.0
 theme = SubResource("Theme_lg61g")
-script = ExtResource("2_xds23")
 
 [node name="Grid" type="Node2D" parent="." unique_id=1897605882]
 show_behind_parent = true
