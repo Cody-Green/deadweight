@@ -12,7 +12,7 @@ func _ready() -> void:
 	GameState.player_cargo_changed.connect(_on_player_cargo_changed)
 	_on_player_cargo_changed(GameState.player_cargo) #instantiate with the player_cargo value in GameState
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if player_ship:
 		label.position = player_ship.get_global_transform_with_canvas().origin + Vector2(-label.size.x / 2.0, -60)
 

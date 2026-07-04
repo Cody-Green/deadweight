@@ -11,7 +11,7 @@ script = ExtResource("1_ekgxt")
 collision_layer = 5
 
 [node name="CollisionCircle" type="CollisionShape2D" parent="CollisionArea" unique_id=250644367]
-debug_color = Color(0.76862746, 0.38431373, 0.1764706, 1)
+debug_color = Color(1, 0, 1, 1)
 script = ExtResource("2_1eaqt")
 
 [node name="CollectibleShape" type="Node2D" parent="." unique_id=55811968]

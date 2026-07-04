@@ -5,5 +5,7 @@
 
 extends Node2D
 
+var size : float = 0.0
+
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, 20, Color(0x4ec9b01e), true, -1, true)
+	draw_circle(Vector2.ZERO, size, Color(0xa80000ff), true, -1, true)
