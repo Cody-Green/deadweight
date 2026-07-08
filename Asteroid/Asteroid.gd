@@ -8,9 +8,9 @@ var asteroid_min_radius		: float
 var asteroid_max_radius		: float
 
 func _ready() -> void:
-	var asteroid_resolution = GameState.asteroid_resolution
-	var asteroid_min_radius = GameState.asteroid_min_radius
-	var asteroid_max_radius = GameState.asteroid_max_radius
+	asteroid_resolution = GameState.asteroid_resolution
+	asteroid_min_radius = GameState.asteroid_min_radius
+	asteroid_max_radius = GameState.asteroid_max_radius
 	
 	for vertex in asteroid_resolution:
 		var step_angle : float = vertex * TAU / asteroid_resolution
