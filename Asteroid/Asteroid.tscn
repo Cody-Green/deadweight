@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cqrg642q104n3"]
 
 [ext_resource type="Script" uid="uid://cc4r71dq032x1" path="res://Asteroid/Asteroid.gd" id="1_h8dtb"]
-[ext_resource type="Script" uid="uid://b2aekhtc5t45a" path="res://Asteroid/CollisionShape.gd" id="2_mf2qt"]
 
 [node name="Asteroid" type="Node2D" unique_id=1210788875]
 script = ExtResource("1_h8dtb")
@@ -11,4 +10,3 @@ script = ExtResource("1_h8dtb")
 [node name="Area2D" type="Area2D" parent="." unique_id=1665662323]
 
 [node name="CollisionShape" type="CollisionPolygon2D" parent="Area2D" unique_id=755672773]
-script = ExtResource("2_mf2qt")

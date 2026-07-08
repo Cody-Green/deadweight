@@ -13,7 +13,6 @@ var field_position			: Vector2 	=  Vector2.ZERO
 var num_collectibles 		: int		=  5
 var num_fields				: int		=  3
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for i in range(num_fields):
 		seed_field(field_position)
