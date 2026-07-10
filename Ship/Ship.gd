@@ -25,8 +25,8 @@ var orbit_speed 		:float = 3.0
 
 # --- debug trail ---
 var trail_points : Array[Vector2] = []
-const TRAIL_MAX  := 100 
-const TRAIL_GAP  := 16
+const TRAIL_MAX  := 2000 
+const TRAIL_GAP  := 25
 
 func _ready() -> void:
 	rotation = GameState.player_rotation

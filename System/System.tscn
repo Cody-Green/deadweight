@@ -27,9 +27,9 @@ script = ExtResource("2_v8nng")
 [node name="InputManager" type="Node2D" parent="." unique_id=1575179162]
 script = ExtResource("1_fjbyk")
 
-[node name="CollectibleSpawner" parent="." unique_id=2085309862 instance=ExtResource("1_ysovm")]
-
 [node name="AsteroidSpawner" parent="." unique_id=1744349092 instance=ExtResource("5_v8nng")]
+
+[node name="CollectibleSpawner" parent="AsteroidSpawner" unique_id=2085309862 instance=ExtResource("1_ysovm")]
 
 [node name="EmptySpace" type="Node" parent="." unique_id=1415416465]
 script = ExtResource("8_lg61g")

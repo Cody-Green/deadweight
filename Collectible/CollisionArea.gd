@@ -2,4 +2,4 @@
 extends Area2D
 
 func _ready() -> void:
-	collision_layer = 0b101 #Layer 1 and 3
+	assert(collision_layer == 0b101, "Collectible needs layers 1+3: ship pickup + clickable")

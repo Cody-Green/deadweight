@@ -2,19 +2,15 @@
 
 extends Node2D
 
-var system_collectibles :int
 var resetting := false
 var current_menu :Control = null
 var cursor_menu :PackedScene = preload("res://CursorMenus/CursorMenu.tscn")
 
 func _ready() -> void:
 	$UIController.player_ship = $Ship
-	child_entered_tree.connect(_on_collectible_added)
-	child_exiting_tree.connect(_on_collectible_removed)
 	$InputManager.target_selected.connect(_on_new_target)
 	$InputManager.zoom_level_changed.connect(_on_camera_zoom)
 	$InputManager.camera_reset_selected.connect(_on_camera_reset)
-
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("system_reset"):
@@ -23,18 +19,9 @@ func _process(_delta: float) -> void:
 func _on_camera_reset() -> void:
 	$SystemCamera.center_camera_on_player($Ship.global_position)
 
-func _on_collectible_added(node) -> void:
-	if node.is_in_group("collectibles"):
-		system_collectibles += 1
-
 func _on_collectible_removed(node) -> void:
 	if not is_inside_tree():
 		return
-
-	if node.is_in_group("collectibles"):
-		system_collectibles -= 1
-		if system_collectibles <= 0 and not resetting:
-			system_reset($Ship.rotation, $Ship.global_position, $SystemCamera.zoom, 0)
 
 func system_reset(set_ship_rotation: float, set_ship_position: Vector2, set_zoom: Vector2, set_ship_cargo: int) -> void:
 	if resetting:
