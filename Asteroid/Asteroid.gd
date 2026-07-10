@@ -6,6 +6,7 @@ var asteroid_vertices		: PackedVector2Array
 var asteroid_resolution		: int
 var asteroid_min_radius		: float
 var asteroid_max_radius		: float
+var actions :	Array = [{"text" : "Approach", "id" : "approach"}, {"text" : "Mine", "id" : "mine"}, {"text" : "Orbit", "id" : "orbit"}]
 
 func _ready() -> void:
 	asteroid_resolution = GameState.asteroid_resolution
@@ -18,4 +19,7 @@ func _ready() -> void:
 		asteroid_vertices.append(Vector2(cos(step_angle), sin(step_angle)) * radius)
 
 	$AsteroidShape.polygon = asteroid_vertices
-	$Area2D/CollisionShape.polygon = asteroid_vertices
+	$CollisionArea/CollisionShape.polygon = asteroid_vertices
+
+func get_menu_actions() -> Array:
+	return actions

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cc16xqxifqhhr" path="res://Collectible/Collectible.gd" id="1_ekgxt"]
 [ext_resource type="Script" uid="uid://cvb5ewmsp0mv2" path="res://Collectible/CollisionCircle.gd" id="2_1eaqt"]
+[ext_resource type="Script" uid="uid://di7ss2o4w8503" path="res://Collectible/CollisionArea.gd" id="2_y17nq"]
 [ext_resource type="Script" uid="uid://tjs16fyrtxmy" path="res://Collectible/CollectibleShape.gd" id="3_1eaqt"]
 
 [node name="Collectible" type="Node2D" unique_id=1206956964]
@@ -9,6 +10,7 @@ script = ExtResource("1_ekgxt")
 
 [node name="CollisionArea" type="Area2D" parent="." unique_id=284736311]
 collision_layer = 5
+script = ExtResource("2_y17nq")
 
 [node name="CollisionCircle" type="CollisionShape2D" parent="CollisionArea" unique_id=250644367]
 debug_color = Color(1, 0, 1, 1)
