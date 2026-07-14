@@ -23,6 +23,10 @@ var is_orbiting 		:bool  = false
 var orbit_distance 		:float = 200.0
 var orbit_speed 		:float = 3.0
 
+var last_time			:int
+var mining_laser_cycle	:int   = 2 #Temporary: number of seconds to extract an ore chunk
+var is_mining			:bool  = false
+
 # --- debug trail ---
 var trail_points : Array[Vector2] = []
 const TRAIL_MAX  := 2000 
@@ -33,6 +37,7 @@ func _ready() -> void:
 	target_position = GameState.player_position
 	position = GameState.player_position
 	$Hull.set_hull(hull_length, hull_width, notch_scale)
+	last_time = Time.get_ticks_msec()
 
 func _process(delta: float) -> void:
 	if is_orbiting:
@@ -78,6 +83,14 @@ func orbit_target(delta: float) -> void:
 	position += to_point.normalized() * min(speed * delta, to_point.length())
 	GameState.player_position = position
 	GameState.player_rotation = rotation
+	
+func initiate_mining() -> void:
+	if is_mining:
+		return
+	is_mining = true
+	if Time.get_ticks_msec() - last_time >= mining_laser_cycle * 1000:
+		print("Ticks since last_time: ", Time.get_ticks_msec() - last_time)
+		last_time = Time.get_ticks_msec()
 
 func _draw() -> void:
 	if not GameState.debug or trail_points.size() < 2:
