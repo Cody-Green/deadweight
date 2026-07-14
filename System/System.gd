@@ -19,10 +19,6 @@ func _process(_delta: float) -> void:
 func _on_camera_reset() -> void:
 	$SystemCamera.center_camera_on_player($Ship.global_position)
 
-func _on_collectible_removed(_node) -> void:
-	if not is_inside_tree():
-		return
-
 func system_reset(set_ship_rotation: float, set_ship_position: Vector2, set_zoom: Vector2, set_ship_cargo: int) -> void:
 	if resetting:
 		return

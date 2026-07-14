@@ -14,7 +14,7 @@ var ore_mass_max			: float = 100 #Temporary: currently set to match ore_mass_max
 var ore_mass				: float
 var ore_yield_min			: float = 25 #Temporary: currently set to match ore_yield_max for testing
 var ore_yield_max			: float = 25 #Temporary: currently set to match ore_yield_min for testing
-var ore_yeild				: float #Temporary: this will be determined by the module and passed in through the ship in the future
+
 
 func _ready() -> void:
 	asteroid_resolution = GameState.asteroid_resolution
@@ -34,10 +34,11 @@ func get_menu_actions() -> Array:
 	return actions
 
 func extract_ore_chunk() -> void:
-	ore_yeild = randf_range(ore_yield_min, ore_yield_max)
-	ore_mass -= min(ore_yeild, ore_mass)
+	var ore_yield : float =  randf_range(ore_yield_min, ore_yield_max) #Temporary: this will be determined by the module and passed in through the ship in the future
+	var ore_chunk_mass = min(ore_yield, ore_mass)
+	ore_mass -= ore_chunk_mass
 	var new_ore_chunk = ore_chunk.instantiate()
-	new_ore_chunk.mass = ore_yeild
+	new_ore_chunk.mass = ore_chunk_mass
 	new_ore_chunk.position = self.global_position + (GameState.player_position - self.global_position).normalized() * (GameState.player_position - self.global_position).length()
 	get_parent().add_child.call_deferred(new_ore_chunk)
 	if ore_mass <= 0:

@@ -36,8 +36,8 @@ func _ready() -> void:
 	rotation = GameState.player_rotation
 	target_position = GameState.player_position
 	position = GameState.player_position
-	$Hull.set_hull(hull_length, hull_width, notch_scale)
-	$CollisionArea/CollisionShape.set_collision_shape(Vector2(0, 0), Vector2(-hull_length, -hull_width), Vector2(-hull_length, hull_width))
+	$Hull.set_hull(hull_length, hull_width / 2, notch_scale)
+	$CollisionArea/CollisionShape.set_collision_shape(Vector2(0, 0), Vector2(-hull_length, -hull_width / 2), Vector2(-hull_length, hull_width / 2))
 	last_time = Time.get_ticks_msec()
 
 func _process(delta: float) -> void:
