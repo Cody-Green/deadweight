@@ -54,11 +54,16 @@ func _process(delta: float) -> void:
 				trail_points.pop_front()
 		queue_redraw()
 
-	if is_mining and is_instance_valid(mining_target) and self.global_position.distance_to(mining_target.global_position) <= mining_range:
-		time_since_last_cycle += delta
-		if time_since_last_cycle >= mining_laser_cycle:
-			time_since_last_cycle = 0
-			mining_pulse()
+	if is_mining:
+		if not is_instance_valid(mining_target):
+			is_mining = false
+		elif self.global_position.distance_to(mining_target.global_position) <= mining_range:
+			time_since_last_cycle += delta
+			if time_since_last_cycle >= mining_laser_cycle:
+				time_since_last_cycle = 0
+				mining_pulse()
+		else: 
+			return
 
 func set_target_position(pos: Vector2) -> void:
 	is_orbiting = false
@@ -102,9 +107,6 @@ func initiate_mining(target) -> void:
 	is_mining = true
 
 func mining_pulse() -> void:
-	if not is_instance_valid(mining_target):
-		is_mining = false
-		return
 	mining_target.extract_ore_chunk()
 
 func _draw() -> void:
