@@ -54,7 +54,7 @@ func _process(delta: float) -> void:
 				trail_points.pop_front()
 		queue_redraw()
 
-	while(is_mining):
+	if is_mining:
 		time_since_last_cycle += delta
 		if time_since_last_cycle >= mining_laser_cycle:
 			time_since_last_cycle = 0
@@ -93,8 +93,13 @@ func orbit_target(delta: float) -> void:
 	GameState.player_rotation = rotation
 	
 func initiate_mining(target) -> void:
-	if is_mining:
-		return
+	if self.global_position.distance_to(target.global_position) > mining_range:
+		set_target_position(
+				global_position +
+				(target.global_position - self.global_position).normalized() * 
+				((target.global_position - self.global_position).length() - (mining_range - 5)))
+		mining_target = target
+		is_mining = true
 	mining_target = target
 	is_mining = true
 
