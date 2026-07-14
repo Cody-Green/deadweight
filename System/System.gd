@@ -61,11 +61,7 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 				(direction_to_target.length() - target.collect_range))
 			"orbit": $Ship.set_orbit(target.global_position)
 			"mine":
-				if $Ship.global_position.distance_to(target.global_position) > 110: #Temporary: distance just outside of temp approach distance
-					print("Out of mining range")
-				else:
-					print("Mining the asteroid")
-					target.extract_ore_chunk()
+				$Ship.initiate_mining(target)
 			_: print(unreachable_message)
 	else: #The user has selected empty space
 		match action:

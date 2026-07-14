@@ -39,7 +39,7 @@ func extract_ore_chunk() -> void:
 	ore_mass -= ore_chunk_mass
 	var new_ore_chunk = ore_chunk.instantiate()
 	new_ore_chunk.mass = ore_chunk_mass
-	new_ore_chunk.position = self.global_position + (GameState.player_position - self.global_position).normalized() * (GameState.player_position - self.global_position).length()
+	new_ore_chunk.position = GameState.player_position #Temporary: the chunk spawns on the player to insta-collect; for testing until tractor beams are implemented
 	get_parent().add_child.call_deferred(new_ore_chunk)
 	if ore_mass <= 0:
 		queue_free()

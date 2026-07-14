@@ -4,28 +4,30 @@
 
 extends Node2D
 
-var orbit_center 		:Vector2 = Vector2(0, 0)
-var target_position 	:Vector2 = Vector2(0, 0)
+var orbit_center 			:Vector2 = Vector2(0, 0)
+var target_position 		:Vector2 = Vector2(0, 0)
 
-var speed				:int = 400
-var target_angle 		:float = 0.0
-var turn_speed 			:float = 5
+var speed					:int = 400
+var target_angle 			:float = 0.0
+var turn_speed 				:float = 5
 
-var hull_length 		:float = 64.0
-var hull_width 			:float = 32.0
-var notch_scale 		:float = 0.28
+var hull_length 			:float = 64.0
+var hull_width 				:float = 32.0
+var notch_scale 			:float = 0.28
 
-var rotation_epsilon 	:float = pow(10, -5)
-var stopping_epsilon 	:float = pow(10, -5)
+var rotation_epsilon 		:float = pow(10, -5)
+var stopping_epsilon 		:float = pow(10, -5)
 
-var orbital_angle 		:float = 0.0
-var is_orbiting 		:bool  = false
-var orbit_distance 		:float = 200.0
-var orbit_speed 		:float = 3.0
+var orbital_angle 			:float = 0.0
+var is_orbiting 			:bool  = false
+var orbit_distance 			:float = 200.0
+var orbit_speed 			:float = 3.0
 
-var last_time			:int
-var mining_laser_cycle	:int   = 2 #Temporary: number of seconds to extract an ore chunk
-var is_mining			:bool  = false
+var mining_target			:Object
+var mining_laser_cycle		:int   = 2 #Temporary: number of seconds to extract an ore chunk
+var time_since_last_cycle 	:float = 0
+var is_mining				:bool  = false
+var mining_range			:float = 110.0 #Temporary: will be determined by modules in the future
 
 # --- debug trail ---
 var trail_points : Array[Vector2] = []
@@ -38,7 +40,6 @@ func _ready() -> void:
 	position = GameState.player_position
 	$Hull.set_hull(hull_length, hull_width / 2, notch_scale)
 	$CollisionArea/CollisionShape.set_collision_shape(Vector2(0, 0), Vector2(-hull_length, -hull_width / 2), Vector2(-hull_length, hull_width / 2))
-	last_time = Time.get_ticks_msec()
 
 func _process(delta: float) -> void:
 	if is_orbiting:
@@ -52,7 +53,13 @@ func _process(delta: float) -> void:
 			if trail_points.size() > TRAIL_MAX:
 				trail_points.pop_front()
 		queue_redraw()
-		
+
+	while(is_mining):
+		time_since_last_cycle += delta
+		if time_since_last_cycle >= mining_laser_cycle:
+			time_since_last_cycle = 0
+			mining_pulse()
+
 func set_target_position(pos: Vector2) -> void:
 	is_orbiting = false
 	target_position = pos
@@ -85,8 +92,17 @@ func orbit_target(delta: float) -> void:
 	GameState.player_position = position
 	GameState.player_rotation = rotation
 	
-func initiate_mining() -> void:
-	pass
+func initiate_mining(target) -> void:
+	if is_mining:
+		return
+	mining_target = target
+	is_mining = true
+
+func mining_pulse() -> void:
+	if not mining_target or self.global_position.distance_to(mining_target.global_position) > mining_range:
+		is_mining = false
+		return
+	mining_target.extract_ore_chunk()
 
 func _draw() -> void:
 	if not GameState.debug or trail_points.size() < 2:
