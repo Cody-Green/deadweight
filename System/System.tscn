@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://vp8gg860mx1w" path="res://System/InputManager.gd" id="1_fjbyk"]
 [ext_resource type="Script" uid="uid://c7r576gd7f4ca" path="res://System/System.gd" id="1_lg61g"]
 [ext_resource type="Script" uid="uid://ckg4kg6rugsp0" path="res://System/UIController.gd" id="1_xds23"]
-[ext_resource type="PackedScene" uid="uid://dyqdylqx5hav3" path="res://Spawners/CollectibleSpawner.tscn" id="1_ysovm"]
 [ext_resource type="Script" uid="uid://crf8nlidgh7rx" path="res://System/GridBackground.gd" id="2_gacec"]
 [ext_resource type="Script" uid="uid://b3ivx6aetteia" path="res://System/SystemCamera.gd" id="2_v8nng"]
 [ext_resource type="PackedScene" uid="uid://cb6al6nj5gt4d" path="res://Spawners/AsteroidSpawner.tscn" id="5_v8nng"]
@@ -28,8 +27,6 @@ script = ExtResource("2_v8nng")
 script = ExtResource("1_fjbyk")
 
 [node name="AsteroidSpawner" parent="." unique_id=1744349092 instance=ExtResource("5_v8nng")]
-
-[node name="CollectibleSpawner" parent="AsteroidSpawner" unique_id=2085309862 instance=ExtResource("1_ysovm")]
 
 [node name="EmptySpace" type="Node" parent="." unique_id=1415416465]
 script = ExtResource("8_lg61g")

@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 func _on_camera_reset() -> void:
 	$SystemCamera.center_camera_on_player($Ship.global_position)
 
-func _on_collectible_removed(node) -> void:
+func _on_collectible_removed(_node) -> void:
 	if not is_inside_tree():
 		return
 
@@ -69,7 +69,7 @@ func _on_action_chosen(action: String, target, world_position) -> void:
 					print("Out of mining range")
 				else:
 					print("Mining the asteroid")
-					$Ship.initiate_mining()
+					target.extract_ore_chunk()
 			_: print(unreachable_message)
 	else: #The user has selected empty space
 		match action:

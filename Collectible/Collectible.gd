@@ -15,7 +15,6 @@ var collect_range = size / 2
 func _ready() -> void:
 	$CollisionArea.area_entered.connect(_on_area_entered)
 	$CollisionArea/CollisionCircle.shape.radius = size / 2
-	mass = randf_range(5.0, 50.0)
 	$CollectibleShape.size = size / 2
 	
 func _on_area_entered(area) -> void:

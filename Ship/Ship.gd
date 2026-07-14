@@ -37,6 +37,7 @@ func _ready() -> void:
 	target_position = GameState.player_position
 	position = GameState.player_position
 	$Hull.set_hull(hull_length, hull_width, notch_scale)
+	$CollisionArea/CollisionShape.set_collision_shape(Vector2(0, 0), Vector2(-hull_length, -hull_width), Vector2(-hull_length, hull_width))
 	last_time = Time.get_ticks_msec()
 
 func _process(delta: float) -> void:
@@ -71,7 +72,7 @@ func move_to_target(delta: float) -> void:
 	target_angle = to_target_vector.angle()
 	rotation = rotate_toward(rotation, target_angle, turn_speed * delta)
 	if abs(angle_difference(rotation, target_angle)) < rotation_epsilon:
-		position += Vector2(cos(rotation), sin(rotation)) * min(speed * delta, (target_position - position).length())
+		position += Vector2(cos(rotation), sin(rotation)) * min(speed * delta, to_target_vector.length())
 		GameState.player_position = position
 		GameState.player_rotation = rotation
 		
@@ -85,12 +86,7 @@ func orbit_target(delta: float) -> void:
 	GameState.player_rotation = rotation
 	
 func initiate_mining() -> void:
-	if is_mining:
-		return
-	is_mining = true
-	if Time.get_ticks_msec() - last_time >= mining_laser_cycle * 1000:
-		print("Ticks since last_time: ", Time.get_ticks_msec() - last_time)
-		last_time = Time.get_ticks_msec()
+	pass
 
 func _draw() -> void:
 	if not GameState.debug or trail_points.size() < 2:
