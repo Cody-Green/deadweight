@@ -33,6 +33,7 @@ func _on_new_target(target_object: Object, world_position, screen_space_position
 	if current_menu:
 		current_menu.queue_free()
 	var new_menu = cursor_menu.instantiate()
+	new_menu.position = screen_space_position
 	if target_object:
 		var entity = target_object.owner # Area2D collider -> Collectible root
 		new_menu.target = entity
@@ -43,7 +44,6 @@ func _on_new_target(target_object: Object, world_position, screen_space_position
 
 	new_menu.action_chosen.connect(_on_action_chosen.bind(world_position))
 	$UIController.add_child(new_menu)
-	new_menu.position = screen_space_position.clamp(Vector2.ZERO, new_menu.viewport_rect_size - new_menu.menu_size)
 	current_menu = new_menu
 	
 func _on_action_chosen(action: String, target, world_position) -> void:

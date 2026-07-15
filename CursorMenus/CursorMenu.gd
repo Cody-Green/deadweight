@@ -16,8 +16,7 @@ func _ready() -> void:
 		action_button.text = action["text"]
 		action_button.pressed.connect(_on_action_button_pressed.bind(action["id"]))
 		$VBoxContainer.add_child(action_button)
-		menu_size = get_combined_minimum_size()
-		viewport_rect_size = get_viewport_rect().size
+	position.clamp(Vector2.ZERO, get_viewport_rect().size - get_combined_minimum_size())
 
 func _on_action_button_pressed(action: String) -> void:
 	action_chosen.emit(action, target)
