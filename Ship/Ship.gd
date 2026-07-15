@@ -62,8 +62,6 @@ func _process(delta: float) -> void:
 			if time_since_last_cycle >= mining_laser_cycle:
 				time_since_last_cycle = 0
 				mining_pulse()
-		else: 
-			return
 
 func set_target_position(pos: Vector2) -> void:
 	is_orbiting = false
