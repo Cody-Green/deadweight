@@ -16,6 +16,7 @@ var ore_yield_min			: float = 25 #Temporary: currently set to match ore_yield_ma
 var ore_yield_max			: float = 25 #Temporary: currently set to match ore_yield_min for testing
 var total_ore_yield			: float
 var number_of_chunks		: int   = 3
+var ore_chunk_spread		: float = deg_to_rad(35.0)
 
 func _ready() -> void:
 	asteroid_resolution = GameState.asteroid_resolution
@@ -39,10 +40,11 @@ func extract_ore_chunk() -> void:
 	var ore_yield = total_ore_yield / number_of_chunks
 	for chunk in range(number_of_chunks):
 		var ore_chunk_mass = min(ore_yield, ore_mass)
+		var direction = Vector2.from_angle((GameState.player_position - self.position).angle() + randf_range(-ore_chunk_spread, ore_chunk_spread))
 		ore_mass -= ore_chunk_mass
 		var new_ore_chunk = ore_chunk.instantiate() #Collectible.tscn
 		new_ore_chunk.mass = ore_chunk_mass
-		new_ore_chunk.position += self.position + (GameState.player_position - self.position).normalized() * (randf_range(asteroid_max_radius + 2, asteroid_max_radius + 10))  #How do I spawn these at a random position just outside asteroid_max_radius between the asteroid and the ship
+		new_ore_chunk.position = self.position + direction * (asteroid_max_radius + 0.5)
 		get_parent().add_child.call_deferred(new_ore_chunk)
 		if ore_mass <= 0:
 			queue_free()
