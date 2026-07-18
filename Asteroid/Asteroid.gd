@@ -15,8 +15,10 @@ var ore_mass				: float
 var ore_yield_min			: float = 25 #Temporary: currently set to match ore_yield_max for testing
 var ore_yield_max			: float = 25 #Temporary: currently set to match ore_yield_min for testing
 var total_ore_yield			: float
-var number_of_chunks		: int   = 3
-var ore_chunk_spread		: float = deg_to_rad(35.0)
+var number_of_chunks		: int   = 5
+var ore_chunk_spread		: float = deg_to_rad(48.0)
+var ore_chunk_eject_velocity_min : float = 35.0
+var ore_chunk_eject_velocity_max : float = 110.0
 
 func _ready() -> void:
 	asteroid_resolution = GameState.asteroid_resolution
@@ -45,6 +47,7 @@ func extract_ore_chunk() -> void:
 		var new_ore_chunk = ore_chunk.instantiate() #Collectible.tscn
 		new_ore_chunk.mass = ore_chunk_mass
 		new_ore_chunk.position = self.position + direction * (asteroid_max_radius + 0.5)
+		new_ore_chunk.velocity = direction * randf_range(ore_chunk_eject_velocity_min, ore_chunk_eject_velocity_max)
 		get_parent().add_child.call_deferred(new_ore_chunk)
 		if ore_mass <= 0:
 			queue_free()
