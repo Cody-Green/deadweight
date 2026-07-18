@@ -36,15 +36,16 @@ func get_menu_actions() -> Array:
 
 func extract_ore_chunk() -> void:
 	total_ore_yield = randf_range(ore_yield_min, ore_yield_max) #Temporary: this will be determined by the module and passed in through the ship in the future
+	var ore_yield = total_ore_yield / number_of_chunks
 	for chunk in range(number_of_chunks):
-		var ore_yield = total_ore_yield / number_of_chunks
 		var ore_chunk_mass = min(ore_yield, ore_mass)
 		ore_mass -= ore_chunk_mass
 		var new_ore_chunk = ore_chunk.instantiate() #Collectible.tscn
 		new_ore_chunk.mass = ore_chunk_mass
-		new_ore_chunk.position += Vector2(cos((GameState.player_position - self.position).angle()), sin((GameState.player_position - self.position).angle())) * (randf_range(asteroid_max_radius, self.position.distance_to(GameState.player_position)))  #How do I spawn these at a random position just outside asteroid_max_radius between the asteroid and the ship
+		new_ore_chunk.position += self.position + (GameState.player_position - self.position).normalized() * (randf_range(asteroid_max_radius + 2, asteroid_max_radius + 10))  #How do I spawn these at a random position just outside asteroid_max_radius between the asteroid and the ship
 		get_parent().add_child.call_deferred(new_ore_chunk)
 		if ore_mass <= 0:
 			queue_free()
+			break
 	
 	

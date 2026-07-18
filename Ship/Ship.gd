@@ -28,12 +28,12 @@ var mining_target			:Object
 var mining_laser_cycle		:int   = 2
 var time_since_last_cycle 	:float = 0
 var is_mining				:bool  = false
-var mining_range			:float = 110.0
+var mining_range			:float = 200.0
 
 #TEMPORARY: TRACTOR BEAM VARIABLES - To be replaced by modules in the future
 var tractor_beam_targets	:Array = []
 var tractor_beam_range		:float = 200.0
-var tactor_beam_speed		:float = 80.0
+var tractor_beam_speed		:float = 80.0
 var number_of_tractor_beams	:int = 3
 
 # --- debug trail ---
