@@ -10,7 +10,7 @@ var position_max 			: float 	=  20.0
 var field_position_min 		: float 	= -2000.0
 var field_position_max 		: float 	=  2000.0
 var field_position			: Vector2 	=  Vector2.ZERO
-var num_collectibles 		: int		=  5
+var num_collectibles 		: int		=  3
 var num_fields				: int		=  3
 
 func _ready() -> void:

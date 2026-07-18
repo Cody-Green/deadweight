@@ -6,9 +6,7 @@ extends PanelContainer
 
 signal action_chosen(action, target)
 var target				:Object
-var menu_size			:Vector2
 var menu_actions		:Array = []
-var viewport_rect_size	:Vector2
 
 func _ready() -> void:
 	for action in menu_actions:
@@ -16,7 +14,7 @@ func _ready() -> void:
 		action_button.text = action["text"]
 		action_button.pressed.connect(_on_action_button_pressed.bind(action["id"]))
 		$VBoxContainer.add_child(action_button)
-	position.clamp(Vector2.ZERO, get_viewport_rect().size - get_combined_minimum_size())
+	position = position.clamp(Vector2.ZERO, get_viewport_rect().size - get_combined_minimum_size())
 
 func _on_action_button_pressed(action: String) -> void:
 	action_chosen.emit(action, target)

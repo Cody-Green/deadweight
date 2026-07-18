@@ -23,11 +23,18 @@ var is_orbiting 			:bool  = false
 var orbit_distance 			:float = 200.0
 var orbit_speed 			:float = 3.0
 
+#TEMPORARY: MINING VARIABLES - To be replaced by modules in the future
 var mining_target			:Object
-var mining_laser_cycle		:int   = 2 #Temporary: number of seconds to extract an ore chunk
+var mining_laser_cycle		:int   = 2
 var time_since_last_cycle 	:float = 0
 var is_mining				:bool  = false
-var mining_range			:float = 110.0 #Temporary: will be determined by modules in the future
+var mining_range			:float = 110.0
+
+#TEMPORARY: TRACTOR BEAM VARIABLES - To be replaced by modules in the future
+var tractor_beam_targets	:Array = []
+var tractor_beam_range		:float = 200.0
+var tactor_beam_speed		:float = 80.0
+var number_of_tractor_beams	:int = 3
 
 # --- debug trail ---
 var trail_points : Array[Vector2] = []
