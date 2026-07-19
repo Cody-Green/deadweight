@@ -18,7 +18,7 @@ const TRAIL_GAP  := 25
 var collect_range = size / 2
 
 var velocity	: Vector2
-var drag				: float = 10 #Magic vaccume drag coeficient becuase game feel > newtonian physics
+var drag		: float = 35 #Magic vaccume drag coeficient becuase game feel > newtonian physics
 
 func _ready() -> void:
 	$CollisionArea.area_entered.connect(_on_area_entered)

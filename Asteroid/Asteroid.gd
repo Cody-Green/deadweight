@@ -16,9 +16,9 @@ var ore_yield_min			: float = 25 #Temporary: currently set to match ore_yield_ma
 var ore_yield_max			: float = 25 #Temporary: currently set to match ore_yield_min for testing
 var total_ore_yield			: float
 var number_of_chunks		: int   = 5
-var ore_chunk_spread		: float = deg_to_rad(48.0)
-var ore_chunk_eject_velocity_min : float = 35.0
-var ore_chunk_eject_velocity_max : float = 110.0
+var ore_chunk_spread		: float = deg_to_rad(20.0)
+var ore_chunk_eject_velocity_min : float = 60.0
+var ore_chunk_eject_velocity_max : float = 160.0
 
 func _ready() -> void:
 	asteroid_resolution = GameState.asteroid_resolution
